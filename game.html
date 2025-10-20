@@ -228,7 +228,7 @@
 
         <div id="level-1-game" class="screen" style="display: none;">
             <h2>Level 1: Vital Signs Scramble 🧩</h2>
-            <p>Unscramble these **three** words related to the human circulatory system and leading a heart-healthy life!</p>
+            <p>Unscramble these three words related to the human circulatory system and leading a heart-healthy life!</p>
             
             <div id="puzzles-container">
                 </div>
@@ -382,7 +382,7 @@
                 puzzle.solved = true;
                 
                 // Use a bold red message for the revealed answer
-                feedbackElement.innerHTML = `<span class="incorrect">Answer Revealed: **${puzzle.word.toUpperCase()}**</span>`;
+                feedbackElement.innerHTML = `<span class="incorrect">Answer Revealed: ${puzzle.word.toUpperCase()}</span>`;
                 
                 // Disable input and buttons after revealing
                 inputElement.disabled = true;
