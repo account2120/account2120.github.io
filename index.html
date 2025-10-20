@@ -184,7 +184,7 @@
 
     <header>
         <h1>Blood Pressure Puzzle Game</h1>
-        <p>A vital health education tool created for **Pauley Heart Center (VCU Health)**</p>
+        <p>A vital health education tool created for Pauley Heart Center (VCU Health)</p>
     </header>
 
     <main>
@@ -199,10 +199,10 @@
             <h2>🧩 Game Levels & Learning Modules</h2>
             <ul>
                 <li>Level I: Intro to the Heart and its Functions
-                    <div class="level-description">This module covers basic cardiac anatomy and the two key measurements: **systolic and diastolic readings**.</div>
+                    <div class="level-description">This module covers basic cardiac anatomy and the two key measurements: systolic and diastolic readings.</div>
                 </li>
                 <li>Level II: BP & the Dangers of Hypertension
-                    <div class="level-description">Explore the serious risks associated with high blood pressure (**hypertension**), including stroke, heart attack, and kidney failure.</div>
+                    <div class="level-description">Explore the serious risks associated with high blood pressure (hypertension), including stroke, heart attack, and kidney failure.</div>
                 </li>
                 
                 <li id="level-iii-puzzle-container">
@@ -228,7 +228,7 @@
                     <div class="level-description">Focuses on lifestyle changes and medical interventions used to manage and prevent hypertension. Topics include diet (**DASH**), exercise, and stress reduction.</div>
                 </li>
                 <li>Level V: Comprehensive Overview
-                    <div class="level-description">A **comprehensive review module** combining knowledge from all previous levels to test your understanding.</div>
+                    <div class="level-description">A comprehensive review module combining knowledge from all previous levels to test your understanding.</div>
                 </li>
             </ul>
         </section>
@@ -274,14 +274,14 @@
                         handleRecommendation(clickedButton);
                     } else if (buttonType === 'recommend' && !categorizedCorrectly) {
                         // User tried to recommend action before categorizing
-                        feedbackArea.innerHTML = '<p style="color: red;">❌ **First**, you must correctly categorize the BP!</p>';
+                        feedbackArea.innerHTML = '<p style="color: red;">❌ First, you must correctly categorize the BP!</p>';
                     }
                 }
             });
 
             function handleCategorization(button) {
                 if (button.textContent.trim() === CORRECT_CATEGORY_TEXT) {
-                    feedbackArea.innerHTML = '<p style="color: blue;">✅ **Correct Category!** Stage 2 Hypertension identified. Now, select the appropriate next action.</p>';
+                    feedbackArea.innerHTML = '<p style="color: blue;">✅ Correct Category! Stage 2 Hypertension identified. Now, select the appropriate next action.</p>';
                     
                     // 1. MAKE ALL CATEGORY BUTTONS DISAPPEAR
                     document.querySelectorAll('#decision-buttons [data-action="categorize"]').forEach(btn => {
@@ -302,7 +302,7 @@
 
             function handleRecommendation(button) {
                 if (button.textContent.trim() === CORRECT_ACTION_TEXT) {
-                    feedbackArea.innerHTML = '<p style="color: blue;">🎉 **LEVEL COMPLETE!** Correct action for Stage 2 is immediate follow-up to manage risk.</p>';
+                    feedbackArea.innerHTML = '<p style="color: blue;">🎉 LEVEL COMPLETE! Correct action for Stage 2 is immediate follow-up to manage risk.</p>';
                     
                     // 2. MAKE ALL ACTION BUTTONS DISAPPEAR
                     document.querySelectorAll('#decision-buttons [data-action="recommend"]').forEach(btn => {
@@ -340,3 +340,4 @@
     </script>
 </body>
 </html>
+
