@@ -3,76 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bordered Viewport Page</title>
+    <title>Heart Heroes Training Game - Level 1</title>
     <style>
-        /* CRITICAL CSS for full-screen, no-scrolling effect. */
-        html, body {
+        /* --- General and Layout (Gray Theme & Centering) --- */
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #fff;
-            /* Stops scrolling */
-            overflow: hidden; 
-            width: 100vw;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            color: #000;
+            color: #333; /* Dark Text */
+            text-align: center;
+            
+            /* Background Image Setup (Classroom) */
+            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('backgroundimage.png'); 
+            /* The linear-gradient creates a semi-transparent gray overlay (hue) */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center;
+            background-attachment: fixed; /* Keeps background fixed when scrolling, if content grows */
         }
 
-        /* The main container applies the border */
-        .viewport-frame {
-            width: 100%;
-            height: 100%;
-            border: 10px solid #000; /* The black border */
-            box-sizing: border-box; 
-            
-            /* Center the content inside the frame */
+        .container {
+            max-width: 800px;
+            /* Center the container horizontally */
+            margin: 50px auto; 
+            padding: 20px;
+            background-color: rgba(247, 247, 247, 0.95); /* Off-White/Very Light Gray Card with slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+            /* Ensure content is centered within the container */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px;
+        }
+        
+        /* Ensures individual screen content is also centered */
+        .screen {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px; /* Add space below the home button area */
+        }
+        
+        /* Remove extra padding from the main menu screen so its content sits higher */
+        #main-menu {
+             padding-top: 0;
         }
 
-        /* Fixed Back Button Positioning */
-        .back-button-container {
-            position: fixed; /* Keeps it in place relative to the viewport */
-            top: 10px; /* Aligned with the top border */
-            left: 10px; /* Aligned with the left border */
-            z-index: 100; 
-        }
 
-        .back-button {
-            background-color: #000;
-            color: #fff;
-            border: 2px solid #000;
-            padding: 10px 15px;
+        h1, h2 {
+            color: #4a4a4a; /* Medium Gray for Headings */
+            margin-bottom: 20px;
+        }
+        
+        p {
+            margin: 10px 0;
+        }
+        
+        /* --- Buttons --- */
+        button {
+            background-color: #6a6a6a; /* Medium Gray Button */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 8px; /* Increased margin for better spacing */
+            border-radius: 5px;
             cursor: pointer;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            transition: background-color 0.2s, color 0.2s;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        .back-button:hover {
+        button:hover {
+            background-color: #4d4d4d; /* Darker Gray on hover */
+        }
+        
+        /* Specific button style for Hint/Reveal */
+        .hint-button {
+            background-color: #8c8c8c;
+        }
+        .hint-button:hover {
+            background-color: #7a7a7a;
+        }
+        .reveal-button {
+            background-color: #a04040; /* Muted Red */
+        }
+        .reveal-button:hover {
+            background-color: #883030;
+        }
+
+        /* --- BIG Home Button --- */
+        .big-home-button {
+            position: absolute;
+            top: 15px; /* Spacing from the top edge */
+            left: 15px; /* Spacing from the left edge */
+            background-color: #333; /* Darker Gray/Black for prominence */
+            color: white;
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Ensure it stays above other content */
+        }
+        .big-home-button:hover {
+            background-color: #1a1a1a;
+        }
+
+        /* --- Level Select Menu Items --- */
+        .menu-item {
+            display: block;
+            width: 80%; /* Constrain width of menu items */
+            text-align: center;
+            margin: 10px 0;
+            padding: 12px;
+            background-color: #ededed; /* Lightest Gray item background */
+            border: 1px solid #c0c0c0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #dcdcdc; /* Slightly darker on hover */
+        }
+
+        /* --- Level 1 Specifics --- */
+        .puzzle-container {
+            border: 1px solid #c0c0c0;
+            padding: 15px;
+            margin: 15px 0;
+            width: 90%;
+            border-radius: 6px;
             background-color: #fff;
-            color: #000;
+        }
+        
+        .puzzle-input {
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0; 
+            border: 2px solid #a0a0a0; /* Gray Border */
+            border-radius: 4px;
+            text-transform: lowercase;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .correct {
+            color: #38761d; /* Green */
+        }
+        
+        .incorrect {
+            color: #cc0000; /* Red */
+        }
+
+        /* Remove the old placeholder image style as the main body now has the background */
+        .room-image {
+            display: none; /* Hide the old placeholder image */
+        }
+        
+        .scrambled-word {
+            font-size: 28px;
+            font-weight: bold;
+            color: #6a6a6a; /* Use the main button color for the scrambled word */
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .hint-text {
+            font-style: italic;
+            color: #777;
+            margin-top: 10px;
+            min-height: 20px; /* Reserve space */
+        }
+        
+        .reveal-answer-text {
+            font-weight: bold;
+            color: #cc0000;
+        }
+        
+        .puzzle-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="back-button-container">
-        <!-- Links back to the homepage -->
-        <a href="index.html" class="back-button">
-            &larr; Go Back
-        </a>
+    <div class="container">
+        
+        <button id="big-home-button" class="big-home-button" onclick="showScreen('main-menu')" style="display: none;">
+            Home
+        </button>
+
+        <div id="main-menu" class="screen">
+            <h1>Heart Heroes Ambassador Training</h1>
+            <p>Gamifying a training for the Heart Heroes Ambassador Program</p>
+            <p>Welcome to your training mission!</p>
+            <button onclick="showScreen('level-select')">Play Game</button>
+            <button onclick="showScreen('level-select')">Choose Levels</button>
+            <button onclick="showScreen('settings-menu')">Settings</button>
+        </div>
+
+        <div id="level-select" class="screen" style="display: none;">
+            <h1>Choose Your Level</h1>
+            <div class="menu-item" onclick="startGame(1)">
+                Level 1: Vital Signs Scramble (Core Concepts)
+            </div>
+            <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+        </div>
+
+        <div id="settings-menu" class="screen" style="display: none;">
+            <h1>Settings</h1>
+            <p>Settings options would go here.</p>
+            <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+        </div>
+
+        <div id="level-1-game" class="screen" style="display: none;">
+            <h2>Level 1: Vital Signs Scramble 🧩</h2>
+            <p>Unscramble these three words related to the human circulatory system, the core focus of the Heart Heroes Program!</p>
+            
+            <div id="puzzles-container">
+                </div>
+            
+            <button id="check-all-button" onclick="checkAllAnswers()">Check All Puzzles</button>
+            
+            <div id="level-feedback" class="feedback"></div>
+            
+            <button id="next-level-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 1</button>
+        </div>
+
     </div>
 
-    <div class="viewport-frame">
-        <h1>Fixed Viewport</h1>
-        <p>This entire view is bordered and cannot be scrolled. Use the 'Go Back' button to return to the homepage.</p>
-    </div>
+    <script>
+        // --- Game Logic ---
+
+        const screens = {
+            'main-menu': document.getElementById('main-menu'),
+            'level-select': document.getElementById('level-select'),
+            'settings-menu': document.getElementById('settings-menu'),
+            'level-1-game': document.getElementById('level-1-game')
+        };
+        const bigHomeButton = document.getElementById('big-home-button'); 
+        const puzzlesContainer = document.getElementById('puzzles-container');
+
+        // NEW PUZZLE DATA based on the JR JUMBLE screenshot
+        const level1Puzzles = [
+            
+            {
+                id: 2,
+                word: "heart",
+                scrambled_letters: "REHAT",
+                hint: "2. A muscle that pushes nutrients through the body.",
+                solved: false
+            },
+            {
+                id: 3,
+                word: "oxygen",
+                scrambled_letters: "XOGYNE",
+                hint: "3. Needed to breathe, also pushed through the body by Answer 1 (Blood).",
+                solved: false
+            },
+            {
+                id: 1,
+                word: "blood",
+                scrambled_letters: "LODBO",
+                hint: "1. Something that flows through the whole body.",
+                solved: false
+            }
+        ];
+
+        function showScreen(screenId) {
+            // Hide all screens
+            for (let id in screens) {
+                screens[id].style.display = 'none';
+            }
+            
+            // Show the requested screen
+            screens[screenId].style.display = 'flex'; /* Use flex to maintain centering */
+
+            // Control the visibility of the BIG Home button
+            if (screenId === 'main-menu') {
+                bigHomeButton.style.display = 'none';
+            } else {
+                bigHomeButton.style.display = 'block';
+            }
+        }
+
+        // NOTE: Since the words are provided as fixed scrambled letters (LODBO, REHAT, XOGYNE), 
+        // we no longer need the shuffleWord function, but we'll leave it in case it's needed for future levels.
+        function shuffleWord(word) {
+            let a = word.split("");
+            let shuffled;
+            do {
+                let n = a.length;
+                for(let i = n - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    let tmp = a[i];
+                    a[i] = a[j];
+                    a[j] = tmp;
+                }
+                shuffled = a.join("");
+            } while (shuffled === word);
+            
+            return shuffled;
+        }
+
+        function startGame(level) {
+            if (level === 1) {
+                showScreen('level-1-game');
+                puzzlesContainer.innerHTML = '';
+                document.getElementById('level-feedback').textContent = '';
+                document.getElementById('next-level-button').style.display = 'none';
+                document.getElementById('check-all-button').style.display = 'inline-block';
+
+                // 1. Set up the puzzles using the fixed scrambled letters
+                level1Puzzles.forEach(p => {
+                    // Use the fixed scrambled letters from the image
+                    p.scrambled = p.scrambled_letters;
+                    p.solved = false;
+                    
+                    // 2. Create the HTML structure for each puzzle
+                    const puzzleHTML = `
+                        <div class="puzzle-container" id="puzzle-${p.id}">
+                            <span class="scrambled-word">${p.scrambled}</span>
+                            <p>${p.hint}</p>
+                            <input type="text" id="answer-input-${p.id}" class="puzzle-input" placeholder="Enter word (${p.word.length} letters)" onkeyup="this.value = this.value.toLowerCase();">
+                            
+                            <div class="puzzle-controls">
+                                <button class="hint-button" onclick="showHint(${p.id})">Click for a Hint</button>
+                                <button class="reveal-button" onclick="revealAnswer(${p.id})">Reveal Answer</button>
+                            </div>
+                            
+                            <div id="feedback-${p.id}" class="feedback"></div>
+                            <div id="hint-text-${p.id}" class="hint-text" style="display: none;">${p.hint}</div>
+                        </div>
+                    `;
+                    puzzlesContainer.innerHTML += puzzleHTML;
+                });
+                
+            } else {
+                // Placeholder for future levels
+                alert("Level " + level + " is not yet available!");
+            }
+        }
+
+        function showHint(puzzleId) {
+            const hintElement = document.getElementById(`hint-text-${puzzleId}`);
+            // Toggle the visibility of the hint text
+            if (hintElement.style.display === 'none') {
+                hintElement.style.display = 'block';
+                // Update the button text to hide the hint
+                document.querySelector(`#puzzle-${puzzleId} .hint-button`).textContent = 'Hide Hint';
+            } else {
+                hintElement.style.display = 'none';
+                // Update the button text to show the hint
+                document.querySelector(`#puzzle-${puzzleId} .hint-button`).textContent = 'Click for a Hint';
+            }
+        }
+
+        function revealAnswer(puzzleId) {
+            const puzzle = level1Puzzles.find(p => p.id === puzzleId);
+            const inputElement = document.getElementById(`answer-input-${puzzleId}`);
+            const feedbackElement = document.getElementById(`feedback-${puzzleId}`);
+            
+            if (puzzle) {
+                // Fill the input and mark as solved immediately, but with a warning
+                inputElement.value = puzzle.word;
+                puzzle.solved = true;
+                
+                // Use a bold red message for the revealed answer
+                feedbackElement.innerHTML = `<span class="incorrect">Answer Revealed: **${puzzle.word.toUpperCase()}**</span>`;
+                
+                // Disable input and buttons after revealing
+                inputElement.disabled = true;
+                document.getElementById(`puzzle-${puzzleId}`).querySelectorAll('button').forEach(btn => btn.disabled = true);
+                
+                // Ensure hint is shown if revealed
+                document.getElementById(`hint-text-${puzzleId}`).style.display = 'block';
+                
+                // Check if all are solved to unlock the level
+                checkAllAnswers(true);
+            }
+        }
+        
+        function checkSinglePuzzle(puzzleId) {
+            const puzzle = level1Puzzles.find(p => p.id === puzzleId);
+            const inputElement = document.getElementById(`answer-input-${puzzleId}`);
+            const feedbackElement = document.getElementById(`feedback-${puzzleId}`);
+            const input = inputElement.value.trim();
+            
+            if (puzzle && !puzzle.solved) { // Only check if not already solved (or revealed)
+                if (input === puzzle.word) {
+                    feedbackElement.textContent = "Correct! ✅";
+                    feedbackElement.className = 'feedback correct';
+                    puzzle.solved = true;
+                    inputElement.disabled = true; // Lock once solved
+                    // Disable Hint/Reveal buttons
+                    document.getElementById(`puzzle-${puzzleId}`).querySelectorAll('.hint-button, .reveal-button').forEach(btn => btn.disabled = true);
+                } else {
+                    feedbackElement.textContent = "Incorrect. Keep trying!";
+                    feedbackElement.className = 'feedback incorrect';
+                    puzzle.solved = false;
+                }
+            }
+            
+            return puzzle.solved;
+        }
+
+        function checkAllAnswers(isRevealed = false) {
+            let allSolved = true;
+            let totalSolved = 0;
+            
+            // Check each puzzle
+            level1Puzzles.forEach(p => {
+                // Note: We don't call checkSinglePuzzle here because that would overwrite 
+                // the `isRevealed` status for revealed puzzles. We just check the `solved` status.
+                if (p.solved) {
+                    totalSolved++;
+                } else {
+                    allSolved = false;
+                }
+            });
+            
+            const levelFeedbackElement = document.getElementById('level-feedback');
+            const nextButton = document.getElementById('next-level-button');
+
+            if (allSolved) {
+                levelFeedbackElement.textContent = "All words unscrambled! You've completed Level 1 and know the core concepts. 🎉";
+                levelFeedbackElement.className = 'feedback correct';
+                nextButton.style.display = 'inline-block';
+                document.getElementById('check-all-button').style.display = 'none';
+            } else {
+                levelFeedbackElement.textContent = `You've solved ${totalSolved} out of ${level1Puzzles.length}. Keep going!`;
+                // Only change to incorrect color if the user is using the check button when not all are solved.
+                if (!isRevealed) {
+                    levelFeedbackElement.className = 'feedback'; 
+                }
+                nextButton.style.display = 'none';
+            }
+        }
+
+
+        // Initialize to show the main menu
+        window.onload = () => showScreen('main-menu');
+    </script>
 
 </body>
 </html>
