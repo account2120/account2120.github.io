@@ -2,76 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Health Care Puzzle Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Puzzle Game - Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
-    <h1>Health Care Puzzle Game</h1>
+    <header>
+        <nav aria-label="Main Navigation">
+            <h1>Blood Pressure Puzzle Game</h1>
+            <p>Created for Pauley Heart Center (VCU Health) by students at CodeRVA Regional Highschool</p>
+        </nav>
+    </header>
 
-    <div id="start-screen" class="visible">
-        <h2>Welcome to the Health Challenge!</h2>
-        <p>Test your knowledge on hygiene, organs, and nutrition across 6 levels.</p>
-        <button id="startButton">START CHALLENGE</button> 
-    </div>
+    <main>
+        <section id="about">
+            <h2>About</h2>
+            <p>This educational game is designed to help students, patients, and families understand the critical aspects of blood pressure monitoring and management, delivered through an engaging, puzzle-based learning approach.</p>
+            <p>Master the four stages of blood pressure and learn effective preventative measures endorsed by cardiac professionals.</p>
+        </section>
 
-    <div id="game">
+        <section id="features">
+            <h2>Levels in the Blood Pressure Learning Puzzle Game</h2>
+            <ul>
+                <li>Level I: Intro to the Heart and its functions
+                    <div class="level-description">This introductory module covers basic cardiac anatomy, the mechanics of blood flow, and the two key measurements that make up blood pressure: systolic and diastolic readings.</div>
+                </li>
+                <li>Level II: BP & the Dangers of Hypertension
+                    <div class="level-description">Explore the risks associated with high blood pressure (hypertension), including stroke, heart attack, and kidney failure. This level emphasizes why regular monitoring is vital for long-term health.</div>
+                </li>
+                <li>Level III: How to take a BP and identify High BP
+                    <div class="level-description">Learn the proper technique for taking blood pressure using an automated cuff. Practice reading the numbers to correctly categorize them according to current medical guidelines (Normal, Elevated, Stage 1, Stage 2).</div>
+                </li>
+                <li>Level IV: Preventative measures
+                    <div class="level-description">Focuses on lifestyle changes and medical interventions used to manage and prevent hypertension. Topics include diet (DASH), exercise, stress reduction, and common medication types.</div>
+                </li>
+                <li>Level V: Overview
+                    <div class="level-description">A comprehensive review module combining knowledge from all previous levels. This final stage tests your understanding of blood pressure monitoring and management.</div>
+                </li>
+            </ul>
+        </section>
 
-        <div id="level1" class="level">
-            <h2>Level 1: Hygiene Quiz</h2>
-            <p>How often should you wash your hands?</p>
-            <div class="option" data-answer="b">a Once a day</div>
-            <div class="option" data-answer="b">b Before eating and after restroom</div>
-            <div class="option" data-answer="b">c Never</div>
+        <div class="centered-game-button">
+            <a href="game.html" class="navigation-button">
+                START THE GAME &rarr;
+            </a>
         </div>
+    </main>
 
-        <div id="level2" class="level">
-            <h2>Level 2: Drag Organs to Body</h2>
-            <p>Drag the correct organ to the body</p>
-            <div id="drag1" draggable="true" data-name="Heart">❤️ Heart</div>
-            <div class="droppable" data-target="Heart">Drop here for heart</div>
-        </div>
+    <footer>
+        <p>&copy; 2025 Pauley Heart Center. All Rights Reserved.</p>
+    </footer>
 
-        <div id="level3" class="level">
-            <h2>Level 3: Healthy or Junk?</h2>
-            <p>Click the healthy food:</p>
-            <div class="option">🍏 Apple</div> 
-            <div class="option">🍟 Fries</div>
-            <div class="option">🍩 Donut</div>
-        </div>
-
-        <div id="level4" class="level">
-            <h2>Level 4: Mental Health True/False</h2>
-            <p>Talking about mental health is a sign of weakness. (True/False)</p>
-            <div class="option">True</div>
-            <div class="option">False</div>
-        </div>
-
-        <div id="level5" class="level">
-            <h2>Level 5: First Aid Order</h2>
-            <p>What should you do first if someone is bleeding?</p>
-            <div class="option">a Apply pressure to the wound</div>
-            <div class="option">b Give them water</div>
-            <div class="option">c Leave them alone</div>
-        </div>
-
-        <div id="level6" class="level">
-            <h2>Level 6: Disease Prevention</h2>
-            <p>Which of the following helps prevent disease?</p>
-            <div class="option">a Vaccination</div>
-            <div class="option">b Skipping meals</div>
-            <div class="option">c Not sleeping</div>
-        </div>
-
-        <div id="complete" class="level">
-            <h2>🎉 You completed all levels!</h2>
-            <p>Great job learning about health care!</p>
-            <a href="index.html" class="home-button">GO BACK TO HOMEPAGE &rarr;</a>
-        </div>
-
-    </div>
-
-    <script src="game.js"></script>
-
+    <script src="scrool.js"></script>
 </body>
 </html>
