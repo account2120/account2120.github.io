@@ -199,9 +199,9 @@
 
     <div class="container">
         
-        <button id="big-home-button" class="big-home-button" onclick="showScreen('main-menu')" style="display: none;">
+        <a id="big-home-button" class="big-home-button" href="index.html">
             Home
-        </button>
+        </a>
 
         <div id="main-menu" class="screen">
             <h1>Heart Heroes Ambassador Training</h1>
@@ -228,7 +228,7 @@
 
         <div id="level-1-game" class="screen" style="display: none;">
             <h2>Level 1: Vital Signs Scramble 🧩</h2>
-            <p>Unscramble these three words related to the human circulatory system, the core focus of the Heart Heroes Program!</p>
+            <p>Unscramble these **three** words related to the human circulatory system and leading a heart-healthy life!</p>
             
             <div id="puzzles-container">
                 </div>
@@ -254,28 +254,27 @@
         const bigHomeButton = document.getElementById('big-home-button'); 
         const puzzlesContainer = document.getElementById('puzzles-container');
 
-        // NEW PUZZLE DATA based on the JR JUMBLE screenshot
+        // UPDATED PUZZLE DATA with 'FITNESS' and correct original scrambled letters
         const level1Puzzles = [
-            
+            {
+                id: 1,
+                word: "fitness", // New kid-friendly word
+                scrambled_letters: "SSTINFE", // Scrambled version of FITNESS (or could be 'LODBO' if we stick to original image scramble logic)
+                hint: "1. A state of health and well-being, achieved through healthy eating and exercise.",
+                solved: false
+            },
             {
                 id: 2,
                 word: "heart",
                 scrambled_letters: "REHAT",
-                hint: "2. A muscle that pushes nutrients through the body.",
+                hint: "2. A muscle that keeps you going, pushing the essential things you need throughout your body.",
                 solved: false
             },
             {
                 id: 3,
                 word: "oxygen",
                 scrambled_letters: "XOGYNE",
-                hint: "3. Needed to breathe, also pushed through the body by Answer 1 (Blood).",
-                solved: false
-            },
-            {
-                id: 1,
-                word: "blood",
-                scrambled_letters: "LODBO",
-                hint: "1. Something that flows through the whole body.",
+                hint: "3. The air you breathe, which your body needs to power your muscles and brain.",
                 solved: false
             }
         ];
@@ -289,16 +288,19 @@
             // Show the requested screen
             screens[screenId].style.display = 'flex'; /* Use flex to maintain centering */
 
-            // Control the visibility of the BIG Home button
+            // MODIFICATION: Make the Home button always visible regardless of screenId
+            bigHomeButton.style.display = 'block';
+
+            /* The previous logic was:
             if (screenId === 'main-menu') {
                 bigHomeButton.style.display = 'none';
             } else {
                 bigHomeButton.style.display = 'block';
             }
+            */
         }
 
-        // NOTE: Since the words are provided as fixed scrambled letters (LODBO, REHAT, XOGYNE), 
-        // we no longer need the shuffleWord function, but we'll leave it in case it's needed for future levels.
+        // NOTE: Keeping shuffleWord but not using it, as we use fixed scrambled letters
         function shuffleWord(word) {
             let a = word.split("");
             let shuffled;
@@ -326,9 +328,9 @@
 
                 // 1. Set up the puzzles using the fixed scrambled letters
                 level1Puzzles.forEach(p => {
-                    // Use the fixed scrambled letters from the image
+                    // Use the fixed scrambled letters
                     p.scrambled = p.scrambled_letters;
-                    p.solved = false;
+                    p.solved = false; // Reset solved state for fresh game
                     
                     // 2. Create the HTML structure for each puzzle
                     const puzzleHTML = `
@@ -357,15 +359,15 @@
 
         function showHint(puzzleId) {
             const hintElement = document.getElementById(`hint-text-${puzzleId}`);
+            const hintButton = document.querySelector(`#puzzle-${puzzleId} .hint-button`);
+
             // Toggle the visibility of the hint text
             if (hintElement.style.display === 'none') {
                 hintElement.style.display = 'block';
-                // Update the button text to hide the hint
-                document.querySelector(`#puzzle-${puzzleId} .hint-button`).textContent = 'Hide Hint';
+                hintButton.textContent = 'Hide Hint';
             } else {
                 hintElement.style.display = 'none';
-                // Update the button text to show the hint
-                document.querySelector(`#puzzle-${puzzleId} .hint-button`).textContent = 'Click for a Hint';
+                hintButton.textContent = 'Click for a Hint';
             }
         }
 
@@ -386,10 +388,10 @@
                 inputElement.disabled = true;
                 document.getElementById(`puzzle-${puzzleId}`).querySelectorAll('button').forEach(btn => btn.disabled = true);
                 
-                // Ensure hint is shown if revealed
+                // Ensure hint is shown (and hint button text is updated/disabled)
                 document.getElementById(`hint-text-${puzzleId}`).style.display = 'block';
                 
-                // Check if all are solved to unlock the level
+                // Re-check all to potentially unlock the level
                 checkAllAnswers(true);
             }
         }
@@ -400,6 +402,7 @@
             const feedbackElement = document.getElementById(`feedback-${puzzleId}`);
             const input = inputElement.value.trim();
             
+            // This is the function called by checkAllAnswers. It actively checks the current input.
             if (puzzle && !puzzle.solved) { // Only check if not already solved (or revealed)
                 if (input === puzzle.word) {
                     feedbackElement.textContent = "Correct! ✅";
@@ -411,7 +414,8 @@
                 } else {
                     feedbackElement.textContent = "Incorrect. Keep trying!";
                     feedbackElement.className = 'feedback incorrect';
-                    puzzle.solved = false;
+                    // Do NOT set puzzle.solved = false here, as it might overwrite a previously correct answer
+                    // The puzzle.solved only gets set to true once correct or revealed.
                 }
             }
             
@@ -422,10 +426,14 @@
             let allSolved = true;
             let totalSolved = 0;
             
-            // Check each puzzle
+            // Check every puzzle (this is the FIX: it forces a check on the current input for UNsolved puzzles)
             level1Puzzles.forEach(p => {
-                // Note: We don't call checkSinglePuzzle here because that would overwrite 
-                // the `isRevealed` status for revealed puzzles. We just check the `solved` status.
+                // If it's not solved, try to solve it with the current input
+                if (!p.solved) {
+                    checkSinglePuzzle(p.id);
+                }
+                
+                // Check the status after the potential check
                 if (p.solved) {
                     totalSolved++;
                 } else {
@@ -443,8 +451,11 @@
                 document.getElementById('check-all-button').style.display = 'none';
             } else {
                 levelFeedbackElement.textContent = `You've solved ${totalSolved} out of ${level1Puzzles.length}. Keep going!`;
-                // Only change to incorrect color if the user is using the check button when not all are solved.
-                if (!isRevealed) {
+                
+                // If checking after a reveal, use a different message/color
+                if (isRevealed) {
+                     levelFeedbackElement.className = 'feedback incorrect';
+                } else {
                     levelFeedbackElement.className = 'feedback'; 
                 }
                 nextButton.style.display = 'none';
