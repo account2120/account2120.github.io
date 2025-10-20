@@ -3,340 +3,469 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Pressure Puzzle Game - Homepage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
-    
+    <title>Heart Heroes Training Game - Level 1</title>
     <style>
-        /* START style.css - All CSS is now inline within the <style> tag */
-        
-        /* Color Palette Definitions */
-        :root {
-            --color-primary-blue: #007bff;     /* Main Blue - Medical/Calmness */
-            --color-danger-red: #ff2f41;       /* Red - Warning/Hypertension */
-            --color-accent-yellow: #f6ff3c;    /* Yellow - Attention/Call to Action */
-            --color-text-dark: #343a40;        /* Dark text */
-            --color-text-light: #f8f9fa;       /* Light text/background */
-            --color-background-light: #ffffff; /* Page background */
-            --color-level-bg: #e9ecef;         /* Level block background */
-        }
-
-        /* Global Styles */
+        /* --- General and Layout (Gray Theme & Centering) --- */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-background-light); 
-            color: var(--color-text-dark);
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            color: #333; /* Dark Text */
+            text-align: center;
+            
+            /* Background Image Setup (Classroom) */
+            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('backgroundimage.png'); 
+            /* The linear-gradient creates a semi-transparent gray overlay (hue) */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center;
+            background-attachment: fixed; /* Keeps background fixed when scrolling, if content grows */
         }
 
-        header {
-            background-color: var(--color-primary-blue);
-            color: var(--color-text-light);
+        .container {
+            max-width: 800px;
+            /* Center the container horizontally */
+            margin: 50px auto; 
             padding: 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--color-accent-yellow); 
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 5px;
-        }
-
-        main {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        h2 {
-            border-bottom: 3px solid var(--color-danger-red); 
-            padding-bottom: 8px;
-            margin-top: 30px;
-            color: var(--color-primary-blue);
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #ccc;
-            margin: 30px 0;
-        }
-
-        /* Features/Levels List */
-        #features ul {
-            list-style: none; 
-            padding-left: 0;
-        }
-
-        #features li {
-            background-color: var(--color-level-bg);
-            margin-bottom: 15px;
-            padding: 15px;
-            border-left: 6px solid var(--color-primary-blue); 
-            border-radius: 5px;
-            font-weight: 600; 
-            transition: background-color 0.3s;
-        }
-        #features li:hover {
-            background-color: #dee2e6;
-        }
-
-        .level-description {
-            font-weight: 300;
-            font-size: 0.95em;
-            margin-top: 5px;
-            padding-top: 5px;
-            border-top: 1px dashed #adb5bd;
-        }
-
-        /* Call to Action Button */
-        .centered-game-button {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .navigation-button {
-            display: inline-block;
-            text-decoration: none;
-            background-color: var(--color-accent-yellow); 
-            color: var(--color-danger-red); 
-            padding: 15px 30px;
-            font-size: 1.2em;
-            font-weight: 800; 
+            background-color: rgba(247, 247, 247, 0.95); /* Off-White/Very Light Gray Card with slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.2s, transform 0.2s;
+            position: relative;
+            /* Ensure content is centered within the container */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Ensures individual screen content is also centered */
+        .screen {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px; /* Add space below the home button area */
+        }
+        
+        /* Remove extra padding from the main menu screen so its content sits higher */
+        #main-menu {
+             padding-top: 0;
+        }
+
+
+        h1, h2 {
+            color: #4a4a4a; /* Medium Gray for Headings */
+            margin-bottom: 20px;
+        }
+        
+        p {
+            margin: 10px 0;
+        }
+        
+        /* --- Buttons --- */
+        button {
+            background-color: #6a6a6a; /* Medium Gray Button */
+            color: white;
             border: none;
-        }
-
-        .navigation-button:hover {
-            background-color: #ffda6a; 
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: var(--color-primary-blue);
-            color: var(--color-text-light);
-            margin-top: 40px;
-            font-size: 0.85em;
-        }
-
-        /* LEVEL III PUZZLE STYLES */
-        #level-iii-puzzle-container {
-            border: 2px solid var(--color-danger-red); 
-            background-color: #fff3cd; 
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .puzzle-title {
-            color: var(--color-danger-red);
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .bp-button {
-            background-color: var(--color-primary-blue);
-            color: var(--color-text-light);
-            border: none;
-            padding: 10px 15px;
-            margin: 5px;
+            padding: 10px 20px;
+            margin: 8px; /* Increased margin for better spacing */
             border-radius: 5px;
             cursor: pointer;
-            font-weight: 600;
-            /* Transition for the disappearing effect */
-            transition: background-color 0.15s, transform 0.1s, opacity 0.3s, height 0.3s, margin 0.3s, padding 0.3s;
-            display: inline-block; 
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        .bp-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.02);
+        button:hover {
+            background-color: #4d4d4d; /* Darker Gray on hover */
+        }
+        
+        /* Specific button style for Hint/Reveal */
+        .hint-button {
+            background-color: #8c8c8c;
+        }
+        .hint-button:hover {
+            background-color: #7a7a7a;
+        }
+        .reveal-button {
+            background-color: #a04040; /* Muted Red */
+        }
+        .reveal-button:hover {
+            background-color: #883030;
         }
 
-        .bp-button:active {
-            background-color: #004085;
+        /* --- BIG Home Button --- */
+        .big-home-button {
+            position: absolute;
+            top: 15px; /* Spacing from the top edge */
+            left: 15px; /* Spacing from the left edge */
+            background-color: #333; /* Darker Gray/Black for prominence */
+            color: white;
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Ensure it stays above other content */
+        }
+        .big-home-button:hover {
+            background-color: #1a1a1a;
         }
 
-        /* Feedback Styles */
-        #feedback-area p {
-            font-weight: 600;
-            padding: 10px;
+        /* --- Level Select Menu Items --- */
+        .menu-item {
+            display: block;
+            width: 80%; /* Constrain width of menu items */
+            text-align: center;
+            margin: 10px 0;
+            padding: 12px;
+            background-color: #ededed; /* Lightest Gray item background */
+            border: 1px solid #c0c0c0;
             border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        #feedback-area p[style*="red"] {
-            background-color: #f8d7da; 
-            color: var(--color-danger-red);
-            border: 1px solid var(--color-danger-red);
+
+        .menu-item:hover {
+            background-color: #dcdcdc; /* Slightly darker on hover */
         }
-        #feedback-area p[style*="blue"] {
-            background-color: #d1ecf1; 
-            color: var(--color-primary-blue);
-            border: 1px solid var(--color-primary-blue);
+
+        /* --- Level 1 Specifics --- */
+        .puzzle-container {
+            border: 1px solid #c0c0c0;
+            padding: 15px;
+            margin: 15px 0;
+            width: 90%;
+            border-radius: 6px;
+            background-color: #fff;
         }
-        /* END style.css */
+        
+        .puzzle-input {
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0; 
+            border: 2px solid #a0a0a0; /* Gray Border */
+            border-radius: 4px;
+            text-transform: lowercase;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .correct {
+            color: #38761d; /* Green */
+        }
+        
+        .incorrect {
+            color: #cc0000; /* Red */
+        }
+
+        /* Remove the old placeholder image style as the main body now has the background */
+        .room-image {
+            display: none; /* Hide the old placeholder image */
+        }
+        
+        .scrambled-word {
+            font-size: 28px;
+            font-weight: bold;
+            color: #6a6a6a; /* Use the main button color for the scrambled word */
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .hint-text {
+            font-style: italic;
+            color: #777;
+            margin-top: 10px;
+            min-height: 20px; /* Reserve space */
+        }
+        
+        .reveal-answer-text {
+            font-weight: bold;
+            color: #cc0000;
+        }
+        
+        .puzzle-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Blood Pressure Puzzle Game</h1>
-        <p>A vital health education tool created for **Pauley Heart Center (VCU Health)**</p>
-    </header>
-
-    <main>
-        <section id="about">
-            <h2>🧠 About the Game</h2>
-            <p>Welcome! This interactive puzzle game is designed to help you master the essentials of blood pressure and heart health. Navigate the levels to understand your body's most vital pump, learn the risks of hypertension, and gain the skills to monitor and manage your health effectively.</p>
-        </section>
+    <div class="container">
         
-        <hr>
+        <a id="big-home-button" class="big-home-button" href="index.html">
+            Home
+        </a>
 
-        <section id="features">
-            <h2>🧩 Game Levels & Learning Modules</h2>
-            <ul>
-                <li>Level I: Intro to the Heart and its Functions
-                    <div class="level-description">This module covers basic cardiac anatomy and the two key measurements: **systolic and diastolic readings**.</div>
-                </li>
-                <li>Level II: BP & the Dangers of Hypertension
-                    <div class="level-description">Explore the serious risks associated with high blood pressure (**hypertension**), including stroke, heart attack, and kidney failure.</div>
-                </li>
-                
-                <li id="level-iii-puzzle-container">
-                    Level III: How to Take a BP and Identify High BP (Live Puzzle Demo!)
-                    <div class="level-description">
-                        <div id="level-three-puzzle">
-                            <h3 class="puzzle-title">Patient BP Reading: <span id="bp-reading">145/92 mmHg</span></h3>
-                            <p>Based on this reading, categorize the result and recommend the next action:</p>
-
-                            <div id="decision-buttons">
-                                <button class="bp-button" data-action="categorize">Stage 2 Hypertension</button>
-                                <button class="bp-button" data-action="categorize">Elevated</button>
-                                <button class="bp-button" data-action="recommend">Schedule Follow-up</button>
-                                <button class="bp-button" data-action="recommend">Re-test in 1 Year</button>
-                            </div>
-
-                            <div id="feedback-area"></div>
-                        </div>
-                    </div>
-                </li>
-                
-                <li>Level IV: Preventative Measures
-                    <div class="level-description">Focuses on lifestyle changes and medical interventions used to manage and prevent hypertension. Topics include diet (**DASH**), exercise, and stress reduction.</div>
-                </li>
-                <li>Level V: Comprehensive Overview
-                    <div class="level-description">A **comprehensive review module** combining knowledge from all previous levels to test your understanding.</div>
-                </li>
-            </ul>
-        </section>
-
-        <div class="centered-game-button">
-            <a href="game.html" class="navigation-button">
-                START THE FULL GAME &rarr;
-            </a>
+        <div id="main-menu" class="screen">
+            <h1>Heart Heroes Ambassador Training</h1>
+            <p>Gamifying a training for the Heart Heroes Ambassador Program</p>
+            <p>Welcome to your training mission!</p>
+            <button onclick="showScreen('level-select')">Play Game</button>
+            <button onclick="showScreen('level-select')">Choose Levels</button>
+            <button onclick="showScreen('settings-menu')">Settings</button>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2025 Simple Site. All Rights Reserved. | Created by CodeRVA for VCU Health</p>
-    </footer>
+        <div id="level-select" class="screen" style="display: none;">
+            <h1>Choose Your Level</h1>
+            <div class="menu-item" onclick="startGame(1)">
+                Level 1: Vital Signs Scramble (Core Concepts)
+            </div>
+            <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+        </div>
+
+        <div id="settings-menu" class="screen" style="display: none;">
+            <h1>Settings</h1>
+            <p>Settings options would go here.</p>
+            <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+        </div>
+
+        <div id="level-1-game" class="screen" style="display: none;">
+            <h2>Level 1: Vital Signs Scramble 🧩</h2>
+            <p>Unscramble these **three** words related to the human circulatory system and leading a heart-healthy life!</p>
+            
+            <div id="puzzles-container">
+                </div>
+            
+            <button id="check-all-button" onclick="checkAllAnswers()">Check All Puzzles</button>
+            
+            <div id="level-feedback" class="feedback"></div>
+            
+            <button id="next-level-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 1</button>
+        </div>
+
+    </div>
 
     <script>
-        /* START script.js - All JavaScript is now inline within the <script> tag */
-        document.addEventListener('DOMContentLoaded', () => {
-            // Correct answers for the reading 145/92 mmHg
-            const CORRECT_CATEGORY_TEXT = 'Stage 2 Hypertension';
-            const CORRECT_ACTION_TEXT = 'Schedule Follow-up';
+        // --- Game Logic ---
 
-            const decisionButtonsContainer = document.getElementById('decision-buttons');
-            const feedbackArea = document.getElementById('feedback-area');
-            let categorizedCorrectly = false; // State variable to track the first step
+        const screens = {
+            'main-menu': document.getElementById('main-menu'),
+            'level-select': document.getElementById('level-select'),
+            'settings-menu': document.getElementById('settings-menu'),
+            'level-1-game': document.getElementById('level-1-game')
+        };
+        const bigHomeButton = document.getElementById('big-home-button'); 
+        const puzzlesContainer = document.getElementById('puzzles-container');
 
-            if (!decisionButtonsContainer) {
-                console.error("Decision buttons container not found. Cannot run puzzle logic.");
-                return;
+        // UPDATED PUZZLE DATA with 'FITNESS' and correct original scrambled letters
+        const level1Puzzles = [
+            {
+                id: 1,
+                word: "fitness", // New kid-friendly word
+                scrambled_letters: "SSTINFE", // Scrambled version of FITNESS (or could be 'LODBO' if we stick to original image scramble logic)
+                hint: "1. A state of health and well-being, achieved through healthy eating and exercise.",
+                solved: false
+            },
+            {
+                id: 2,
+                word: "heart",
+                scrambled_letters: "REHAT",
+                hint: "2. A muscle that keeps you going, pushing the essential things you need throughout your body.",
+                solved: false
+            },
+            {
+                id: 3,
+                word: "oxygen",
+                scrambled_letters: "XOGYNE",
+                hint: "3. The air you breathe, which your body needs to power your muscles and brain.",
+                solved: false
             }
+        ];
 
-            // Set up the event listener on the parent container (Event Delegation)
-            decisionButtonsContainer.addEventListener('click', (event) => {
-                const clickedButton = event.target;
-                // Check if the clicked element is a button
-                if (clickedButton.classList.contains('bp-button')) {
-                    const buttonType = clickedButton.getAttribute('data-action');
+        function showScreen(screenId) {
+            // Hide all screens
+            for (let id in screens) {
+                screens[id].style.display = 'none';
+            }
+            
+            // Show the requested screen
+            screens[screenId].style.display = 'flex'; /* Use flex to maintain centering */
 
-                    if (buttonType === 'categorize') {
-                        handleCategorization(clickedButton);
-                    } else if (buttonType === 'recommend' && categorizedCorrectly) {
-                        // Only allow action if categorization is done
-                        handleRecommendation(clickedButton);
-                    } else if (buttonType === 'recommend' && !categorizedCorrectly) {
-                        // User tried to recommend action before categorizing
-                        feedbackArea.innerHTML = '<p style="color: red;">❌ **First**, you must correctly categorize the BP!</p>';
-                    }
+            // MODIFICATION: Make the Home button always visible regardless of screenId
+            bigHomeButton.style.display = 'block';
+
+            /* The previous logic was:
+            if (screenId === 'main-menu') {
+                bigHomeButton.style.display = 'none';
+            } else {
+                bigHomeButton.style.display = 'block';
+            }
+            */
+        }
+
+        // NOTE: Keeping shuffleWord but not using it, as we use fixed scrambled letters
+        function shuffleWord(word) {
+            let a = word.split("");
+            let shuffled;
+            do {
+                let n = a.length;
+                for(let i = n - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    let tmp = a[i];
+                    a[i] = a[j];
+                    a[j] = tmp;
+                }
+                shuffled = a.join("");
+            } while (shuffled === word);
+            
+            return shuffled;
+        }
+
+        function startGame(level) {
+            if (level === 1) {
+                showScreen('level-1-game');
+                puzzlesContainer.innerHTML = '';
+                document.getElementById('level-feedback').textContent = '';
+                document.getElementById('next-level-button').style.display = 'none';
+                document.getElementById('check-all-button').style.display = 'inline-block';
+
+                // 1. Set up the puzzles using the fixed scrambled letters
+                level1Puzzles.forEach(p => {
+                    // Use the fixed scrambled letters
+                    p.scrambled = p.scrambled_letters;
+                    p.solved = false; // Reset solved state for fresh game
+                    
+                    // 2. Create the HTML structure for each puzzle
+                    const puzzleHTML = `
+                        <div class="puzzle-container" id="puzzle-${p.id}">
+                            <span class="scrambled-word">${p.scrambled}</span>
+                            <p>${p.hint}</p>
+                            <input type="text" id="answer-input-${p.id}" class="puzzle-input" placeholder="Enter word (${p.word.length} letters)" onkeyup="this.value = this.value.toLowerCase();">
+                            
+                            <div class="puzzle-controls">
+                                <button class="hint-button" onclick="showHint(${p.id})">Click for a Hint</button>
+                                <button class="reveal-button" onclick="revealAnswer(${p.id})">Reveal Answer</button>
+                            </div>
+                            
+                            <div id="feedback-${p.id}" class="feedback"></div>
+                            <div id="hint-text-${p.id}" class="hint-text" style="display: none;">${p.hint}</div>
+                        </div>
+                    `;
+                    puzzlesContainer.innerHTML += puzzleHTML;
+                });
+                
+            } else {
+                // Placeholder for future levels
+                alert("Level " + level + " is not yet available!");
+            }
+        }
+
+        function showHint(puzzleId) {
+            const hintElement = document.getElementById(`hint-text-${puzzleId}`);
+            const hintButton = document.querySelector(`#puzzle-${puzzleId} .hint-button`);
+
+            // Toggle the visibility of the hint text
+            if (hintElement.style.display === 'none') {
+                hintElement.style.display = 'block';
+                hintButton.textContent = 'Hide Hint';
+            } else {
+                hintElement.style.display = 'none';
+                hintButton.textContent = 'Click for a Hint';
+            }
+        }
+
+        function revealAnswer(puzzleId) {
+            const puzzle = level1Puzzles.find(p => p.id === puzzleId);
+            const inputElement = document.getElementById(`answer-input-${puzzleId}`);
+            const feedbackElement = document.getElementById(`feedback-${puzzleId}`);
+            
+            if (puzzle) {
+                // Fill the input and mark as solved immediately, but with a warning
+                inputElement.value = puzzle.word;
+                puzzle.solved = true;
+                
+                // Use a bold red message for the revealed answer
+                feedbackElement.innerHTML = `<span class="incorrect">Answer Revealed: **${puzzle.word.toUpperCase()}**</span>`;
+                
+                // Disable input and buttons after revealing
+                inputElement.disabled = true;
+                document.getElementById(`puzzle-${puzzleId}`).querySelectorAll('button').forEach(btn => btn.disabled = true);
+                
+                // Ensure hint is shown (and hint button text is updated/disabled)
+                document.getElementById(`hint-text-${puzzleId}`).style.display = 'block';
+                
+                // Re-check all to potentially unlock the level
+                checkAllAnswers(true);
+            }
+        }
+        
+        function checkSinglePuzzle(puzzleId) {
+            const puzzle = level1Puzzles.find(p => p.id === puzzleId);
+            const inputElement = document.getElementById(`answer-input-${puzzleId}`);
+            const feedbackElement = document.getElementById(`feedback-${puzzleId}`);
+            const input = inputElement.value.trim();
+            
+            // This is the function called by checkAllAnswers. It actively checks the current input.
+            if (puzzle && !puzzle.solved) { // Only check if not already solved (or revealed)
+                if (input === puzzle.word) {
+                    feedbackElement.textContent = "Correct! ✅";
+                    feedbackElement.className = 'feedback correct';
+                    puzzle.solved = true;
+                    inputElement.disabled = true; // Lock once solved
+                    // Disable Hint/Reveal buttons
+                    document.getElementById(`puzzle-${puzzleId}`).querySelectorAll('.hint-button, .reveal-button').forEach(btn => btn.disabled = true);
+                } else {
+                    feedbackElement.textContent = "Incorrect. Keep trying!";
+                    feedbackElement.className = 'feedback incorrect';
+                    // Do NOT set puzzle.solved = false here, as it might overwrite a previously correct answer
+                    // The puzzle.solved only gets set to true once correct or revealed.
+                }
+            }
+            
+            return puzzle.solved;
+        }
+
+        function checkAllAnswers(isRevealed = false) {
+            let allSolved = true;
+            let totalSolved = 0;
+            
+            // Check every puzzle (this is the FIX: it forces a check on the current input for UNsolved puzzles)
+            level1Puzzles.forEach(p => {
+                // If it's not solved, try to solve it with the current input
+                if (!p.solved) {
+                    checkSinglePuzzle(p.id);
+                }
+                
+                // Check the status after the potential check
+                if (p.solved) {
+                    totalSolved++;
+                } else {
+                    allSolved = false;
                 }
             });
+            
+            const levelFeedbackElement = document.getElementById('level-feedback');
+            const nextButton = document.getElementById('next-level-button');
 
-            function handleCategorization(button) {
-                if (button.textContent.trim() === CORRECT_CATEGORY_TEXT) {
-                    feedbackArea.innerHTML = '<p style="color: blue;">✅ **Correct Category!** Stage 2 Hypertension identified. Now, select the appropriate next action.</p>';
-                    
-                    // 1. MAKE ALL CATEGORY BUTTONS DISAPPEAR
-                    document.querySelectorAll('#decision-buttons [data-action="categorize"]').forEach(btn => {
-                        // Smoothly hide the buttons using CSS transitions
-                        btn.style.opacity = '0';
-                        btn.style.height = '0';
-                        btn.style.margin = '0';
-                        btn.style.padding = '0';
-                        setTimeout(() => btn.style.display = 'none', 300); 
-                    });
-                    
-                    categorizedCorrectly = true;
-                    
-                } else {
-                    feedbackArea.innerHTML = '<p style="color: red;">❌ Incorrect. Review the BP guidelines and try again!</p>';
-                }
-            }
-
-            function handleRecommendation(button) {
-                if (button.textContent.trim() === CORRECT_ACTION_TEXT) {
-                    feedbackArea.innerHTML = '<p style="color: blue;">🎉 **LEVEL COMPLETE!** Correct action for Stage 2 is immediate follow-up to manage risk.</p>';
-                    
-                    // 2. MAKE ALL ACTION BUTTONS DISAPPEAR
-                    document.querySelectorAll('#decision-buttons [data-action="recommend"]').forEach(btn => {
-                        btn.style.opacity = '0';
-                        btn.style.height = '0';
-                        btn.style.margin = '0';
-                        btn.style.padding = '0';
-                        setTimeout(() => btn.style.display = 'none', 300);
-                    });
-                    
-                    // 3. APPEAR NEW BUTTON TO MOVE TO NEXT LEVEL
-                    const nextButton = document.createElement('a');
-                    nextButton.href = '#'; // Link to the next game level
-                    nextButton.className = 'navigation-button'; 
-                    nextButton.style.marginTop = '15px';
-                    nextButton.textContent = 'Next Patient Scenario &rarr;';
-                    
-                    // Append the new button to the container
-                    const existingStartButton = document.querySelector('.centered-game-button .navigation-button');
-                    if (existingStartButton) {
-                        // For the demo, let's append it to the puzzle area itself for simplicity
-                        const puzzleDiv = document.getElementById('level-three-puzzle');
-                        puzzleDiv.appendChild(nextButton);
-                    } else {
-                        // Fallback, should not happen if HTML is correct
-                        decisionButtonsContainer.appendChild(nextButton);
-                    }
+            if (allSolved) {
+                levelFeedbackElement.textContent = "All words unscrambled! You've completed Level 1 and know the core concepts. 🎉";
+                levelFeedbackElement.className = 'feedback correct';
+                nextButton.style.display = 'inline-block';
+                document.getElementById('check-all-button').style.display = 'none';
+            } else {
+                levelFeedbackElement.textContent = `You've solved ${totalSolved} out of ${level1Puzzles.length}. Keep going!`;
                 
+                // If checking after a reveal, use a different message/color
+                if (isRevealed) {
+                     levelFeedbackElement.className = 'feedback incorrect';
                 } else {
-                    feedbackArea.innerHTML = '<p style="color: red;">❌ Incorrect Action. This is a severe reading; a simple re-test is not sufficient.</p>';
+                    levelFeedbackElement.className = 'feedback'; 
                 }
+                nextButton.style.display = 'none';
             }
-        });
-        /* END script.js */
+        }
+
+
+        // Initialize to show the main menu
+        window.onload = () => showScreen('main-menu');
     </script>
+
 </body>
 </html>
