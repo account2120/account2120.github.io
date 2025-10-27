@@ -5,198 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart Heroes Training Game - Level 1, 2, 3 & 4</title>
     <style>
-        /* --- General and Layout (Gray Theme & Centering) --- */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            text-align: center;
-            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('image_23fe3f.png'); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        
-        .level-1-bg {
-            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('sketch.png'); 
-        }
-        .level-2-bg {
-            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('sketch2.png'); 
-        }
+        /* --- General and Layout (Blood Pressure Theme & Centering) --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #222;
+    text-align: center;
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('image_23fe3f.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: rgba(247, 247, 247, 0.6);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
+.level-1-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+}
+.level-2-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch2.png'); 
+}
 
-        .screen {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-        }
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
 
-        #main-menu {
-             padding-top: 0;
-        }
+.screen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
 
-        h1, h2 {
-            color: #4a4a4a;
-            margin-bottom: 20px;
-        }
+#main-menu {
+    padding-top: 0;
+}
 
-        p {
-            margin: 10px 0;
-        }
+h1, h2 {
+    color: #b30000; /* Blood pressure red */
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
 
-        button {
-            background-color: #6a6a6a;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #4d4d4d;
-        }
-        .hint-button { background-color: #8c8c8c; }
-        .hint-button:hover { background-color: #7a7a7a; }
-        .reveal-button { background-color: #a04040; }
-        .reveal-button:hover { background-color: #883030; }
+p {
+    margin: 10px 0;
+}
 
-        .question-container {
-            border: 1px solid #c0c0c0;
-            padding: 15px;
-            margin: 15px 0;
-            width: 90%;
-            border-radius: 6px;
-            background-color: #fff;
-            text-align: left;
-        }
+button {
+    background-color: #0073e6; /* BP blue */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+button:hover {
+    background-color: #005bb5;
+    transform: scale(1.05);
+}
+.hint-button { background-color: #ff6666; } /* light red */
+.hint-button:hover { background-color: #e65c5c; }
+.reveal-button { background-color: #b30000; } /* dark red */
+.reveal-button:hover { background-color: #800000; }
 
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-        }
+.question-container {
+    border: 1px solid #b30000;
+    padding: 15px;
+    margin: 15px 0;
+    width: 90%;
+    border-radius: 6px;
+    background-color: #fff;
+    text-align: left;
+}
 
-        .answer-choice {
-            display: block;
-            padding: 10px;
-            margin: 8px 0;
-            background-color: #ededed;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .answer-choice:hover { background-color: #dcdcdc; }
-        .answer-choice.selected-choice {
-            border: 2px solid #6a6a6a;
-            background-color: #c0c0c0;
-        }
+.question-text {
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #b30000;
+}
 
-        .big-home-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: #333;
-            color: white;
-            padding: 12px 18px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-        }
-        .big-home-button:hover { background-color: #1a1a1a; }
+.answer-choice {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    background-color: #e6f2ff; /* pale BP blue */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.answer-choice:hover { background-color: #cce0ff; }
+.answer-choice.selected-choice {
+    border: 2px solid #b30000;
+    background-color: #ffcccc; /* pale red */
+}
 
-        .menu-item {
-            display: block;
-            width: 80%;
-            text-align: center;
-            margin: 10px 0;
-            padding: 12px;
-            background-color: #ededed;
-            border: 1px solid #c0c0c0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .menu-item:hover { background-color: #dcdcdc; }
+.big-home-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #b30000;
+    color: white;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+.big-home-button:hover { background-color: #800000; }
 
-        .puzzle-container {
-            border: 1px solid #c0c0c0;
-            padding: 15px;
-            margin: 15px 0;
-            width: 90%;
-            border-radius: 6px;
-            background-color: rgba(255, 255, 255, 0.6);
-        }
-        .puzzle-input {
-            padding: 10px;
-            font-size: 18px;
-            margin: 10px 0; 
-            border: 2px solid #a0a0a0;
-            border-radius: 4px;
-            text-transform: lowercase;
-            text-align: center;
-            max-width: 90%;
-        }
-        .feedback { margin-top: 15px; font-weight: bold; min-height: 20px; }
-        .correct { color: #38761d; }
-        .incorrect { color: #cc0000; }
-        .scrambled-word { font-size: 28px; font-weight: bold; color: #6a6a6a; letter-spacing: 2px; margin-bottom: 10px; display: block; }
-        .hint-text { font-style: italic; color: #777; margin-top: 10px; min-height: 20px; display: none; }
-        .reveal-answer-text { font-weight: bold; color: #cc0000; }
-        .puzzle-controls { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.menu-item {
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 10px 0;
+    padding: 12px;
+    background-color: #e6f2ff;
+    border: 1px solid #b30000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.menu-item:hover { background-color: #cce0ff; }
 
-        #picture-puzzle-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            width: 300px;
-            height: 300px;
-            border: 3px solid #6a6a6a;
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .puzzle-piece {
-            width: 100%;
-            height: 100%;
-            background-color: #a0a0a0;
-            cursor: pointer;
-            border: 1px solid #c0c0c0;
-            transition: background-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
-            user-select: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 800;
-            font-size: 2.5em;
-            color: white;
-            text-shadow: 1px 1px 3px #333;
-        }
-        .puzzle-piece:hover { background-color: #8c8c8c; box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5); transform: scale(1.03); z-index: 1; }
-        .puzzle-piece.selected { border: 3px solid #a04040; box-shadow: 0 0 15px #a04040; background-color: #cc6666; transform: scale(1.05); }
+.puzzle-container {
+    border: 1px solid #b30000;
+    padding: 15px;
+    margin: 15px 0;
+    width: 90%;
+    border-radius: 6px;
+    background-color: rgba(255, 230, 230, 0.6);
+}
 
-        @media (max-width: 600px) {
-            #picture-puzzle-grid { width: 270px; height: 270px; }
-            .puzzle-piece { font-size: 2em; }
-        }
+.puzzle-input {
+    padding: 10px;
+    font-size: 18px;
+    margin: 10px 0; 
+    border: 2px solid #b30000;
+    border-radius: 4px;
+    text-transform: lowercase;
+    text-align: center;
+    max-width: 90%;
+}
+
+.feedback { 
+    margin-top: 15px; 
+    font-weight: bold; 
+    min-height: 20px; 
+    color: #b30000;
+}
+.correct { color: #008000; } /* green for correct */
+.incorrect { color: #b30000; } /* red for incorrect */
+
+.scrambled-word { 
+    font-size: 28px; 
+    font-weight: bold; 
+    color: #b30000; 
+    letter-spacing: 2px; 
+    margin-bottom: 10px; 
+    display: block; 
+}
+
+.hint-text { 
+    font-style: italic; 
+    color: #990000; 
+    margin-top: 10px; 
+    min-height: 20px; 
+    display: none; 
+}
+.reveal-answer-text { 
+    font-weight: bold; 
+    color: #b30000; 
+}
+
+.puzzle-controls { 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    margin-top: 10px; 
+}
+
+#picture-puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 300px;
+    height: 300px;
+    border: 3px solid #b30000;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.puzzle-piece {
+    width: 100%;
+    height: 100%;
+    background-color: #ff6666; /* red tone */
+    cursor: pointer;
+    border: 1px solid #b30000;
+    transition: background-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 2.5em;
+    color: white;
+    text-shadow: 1px 1px 3px #333;
+}
+.puzzle-piece:hover { 
+    background-color: #cc4d4d; 
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5); 
+    transform: scale(1.03); 
+    z-index: 1; 
+}
+.puzzle-piece.selected { 
+    border: 3px solid #0073e6; 
+    box-shadow: 0 0 15px #0073e6; 
+    background-color: #3399ff; 
+    transform: scale(1.05); 
+}
+
+@media (max-width: 600px) {
+    #picture-puzzle-grid { width: 270px; height: 270px; }
+    .puzzle-piece { font-size: 2em; }
+}
+
     </style>
 </head>
 <body id="game-body">
@@ -461,3 +506,4 @@
     </script>
 </body>
 </html>
+
