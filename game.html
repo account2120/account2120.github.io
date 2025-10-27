@@ -5,299 +5,238 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart Heroes Training Game - Level 1, 2, 3 & 4</title>
     <style>
-        /* --- General and Layout (Gray Theme & Centering) --- */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333; /* Dark Text */
-            text-align: center;
-            
-            /* DEFAULT BACKGROUND (For menus and screens without specific class) */
-            /* Using the original classroom image as the menu background */
-            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('image_23fe3f.png'); 
-            background-size: cover; /* Cover the entire viewport */
-            background-position: center;
-            background-attachment: fixed; /* Keeps background fixed when scrolling, if content grows */
-        }
-        
-        /* --- Level-Specific Backgrounds --- */
-        .level-1-bg {
-            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('sketch.png'); 
-        }
-        
-        .level-2-bg {
-            background-image: linear-gradient(rgba(192, 192, 192, 0.5), rgba(192, 192, 192, 0.5)), url('sketch2.png'); 
-        }
+/* --- General and Layout (Blood Pressure Theme & Centering) --- */
+body {
+    font-family: 'Comic Sans MS', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+    background-image: linear-gradient(rgba(255, 200, 200, 0.6), rgba(255, 150, 150, 0.6)), url('image_23fe3f.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background 0.5s ease;
+}
 
-        .container {
-            max-width: 800px;
-            /* Center the container horizontally */
-            margin: 50px auto; 
-            padding: 20px;
-            background-color: rgba(247, 247, 247, 0.6); /* Off-White/Very Light Gray Card with slight transparency */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            position: relative;
-            /* Ensure content is centered within the container */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        /* Ensures individual screen content is also centered */
-        .screen {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px; /* Add space below the home button area */
-        }
-        
-        /* Remove extra padding from the main menu screen so its content sits higher */
-        #main-menu {
-             padding-top: 0;
-        }
+/* --- Level-Specific Backgrounds --- */
+.level-1-bg {
+    background-image: linear-gradient(rgba(255, 200, 200, 0.6), rgba(255, 150, 150, 0.6)), url('sketch.png');
+}
+.level-2-bg {
+    background-image: linear-gradient(rgba(255, 180, 180, 0.7), rgba(255, 120, 120, 0.7)), url('sketch2.png');
+}
 
+/* --- Container --- */
+.container {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: rgba(255, 245, 245, 0.9);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        h1, h2 {
-            color: #4a4a4a; /* Medium Gray for Headings */
-            margin-bottom: 20px;
-        }
-        
-        p {
-            margin: 10px 0;
-        }
-        
-        /* --- Buttons --- */
-        button {
-            background-color: #6a6a6a; /* Medium Gray Button */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 8px; /* Increased margin for better spacing */
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
+/* --- Screens --- */
+.screen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    transition: all 0.3s ease;
+}
+#main-menu {
+    padding-top: 0;
+}
 
-        button:hover {
-            background-color: #4d4d4d; /* Darker Gray on hover */
-        }
-        
-        /* Specific button style for Hint/Reveal */
-        .hint-button {
-            background-color: #8c8c8c;
-        }
-        .hint-button:hover {
-            background-color: #7a7a7a;
-        }
-        .reveal-button {
-            background-color: #a04040; /* Muted Red */
-        }
-        .reveal-button:hover {
-            background-color: #883030;
-        }
-        
-        /* Quiz specific styling */
-        .question-container {
-            border: 1px solid #c0c0c0;
-            padding: 15px;
-            margin: 15px 0;
-            width: 90%;
-            border-radius: 6px;
-            background-color: #fff;
-            text-align: left;
-        }
-        
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .answer-choice {
-            display: block;
-            padding: 10px;
-            margin: 8px 0;
-            background-color: #ededed;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .answer-choice:hover {
-            background-color: #dcdcdc;
-        }
-        
-        .answer-choice.selected-choice {
-            border: 2px solid #6a6a6a;
-            background-color: #c0c0c0;
-        }
+/* --- Headings & Paragraphs --- */
+h1, h2 {
+    color: #b22222; /* Blood red for headings */
+    margin-bottom: 20px;
+}
+p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #4a4a4a;
+}
 
+/* --- Buttons --- */
+button {
+    background: linear-gradient(145deg, #ff6666, #cc3333);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+button:hover {
+    background: linear-gradient(145deg, #cc3333, #ff6666);
+    transform: translateY(-2px);
+}
 
-        /* --- BIG Home Button --- */
-        .big-home-button {
-            position: absolute;
-            top: 15px; /* Spacing from the top edge */
-            left: 15px; /* Spacing from the left edge */
-            background-color: #333; /* Darker Gray/Black for prominence */
-            color: white;
-            padding: 12px 18px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 10; /* Ensure it stays above other content */
-        }
-        .big-home-button:hover {
-            background-color: #1a1a1a;
-        }
+/* --- Hint / Reveal Buttons --- */
+.hint-button {
+    background: #ff9999;
+}
+.hint-button:hover {
+    background: #ff8080;
+}
+.reveal-button {
+    background: #ff4d4d;
+}
+.reveal-button:hover {
+    background: #e60000;
+}
 
-        /* --- Level Select Menu Items --- */
-        .menu-item {
-            display: block;
-            width: 80%; /* Constrain width of menu items */
-            text-align: center;
-            margin: 10px 0;
-            padding: 12px;
-            background-color: #ededed; /* Lightest Gray item background */
-            border: 1px solid #c0c0c0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+/* --- Quiz and Puzzle Containers --- */
+.question-container, .puzzle-container {
+    border: 2px solid #ff9999;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    background-color: rgba(255, 230, 230, 0.9);
+    width: 90%;
+    text-align: center;
+    box-shadow: inset 0 0 5px rgba(255, 100, 100, 0.3);
+    transition: all 0.3s ease;
+}
 
-        .menu-item:hover {
-            background-color: #dcdcdc; /* Slightly darker on hover */
-        }
+/* --- Scrambled Words --- */
+.scrambled-word {
+    font-size: 30px;
+    font-weight: bold;
+    color: #b22222;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: block;
+}
 
-        /* --- Level 1 Specifics --- */
-        .puzzle-container {
-            border: 1px solid #c0c0c0;
-            padding: 15px;
-            margin: 15px 0;
-            width: 90%;
-            border-radius: 6px;
-            background-color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .puzzle-input {
-            padding: 10px;
-            font-size: 18px;
-            margin: 10px 0; 
-            border: 2px solid #a0a0a0; /* Gray Border */
-            border-radius: 4px;
-            text-transform: lowercase;
-            text-align: center;
-            max-width: 90%;
-        }
+/* --- Puzzle Input --- */
+.puzzle-input {
+    padding: 10px;
+    font-size: 18px;
+    margin: 10px 0;
+    border: 2px solid #ff6666;
+    border-radius: 6px;
+    text-align: center;
+    max-width: 90%;
+    transition: all 0.2s ease;
+}
+.puzzle-input:focus {
+    outline: none;
+    border-color: #b22222;
+    box-shadow: 0 0 8px rgba(178, 34, 34, 0.5);
+}
 
-        .feedback {
-            margin-top: 15px;
-            font-weight: bold;
-            min-height: 20px; /* Ensure space for feedback */
-        }
-        
-        .correct {
-            color: #38761d; /* Green */
-        }
-        
-        .incorrect {
-            color: #cc0000; /* Red */
-        }
+/* --- Feedback Messages --- */
+.feedback {
+    margin-top: 12px;
+    font-weight: bold;
+    min-height: 22px;
+}
+.correct {
+    color: #388e3c; /* green */
+}
+.incorrect {
+    color: #cc0000; /* red */
+}
 
-        /* Remove the old placeholder image style as the main body now has the background */
-        .room-image {
-            display: none; /* Hide the old placeholder image */
-        }
-        
-        .scrambled-word {
-            font-size: 28px;
-            font-weight: bold;
-            color: #6a6a6a; /* Use the main button color for the scrambled word */
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .hint-text {
-            font-style: italic;
-            color: #777;
-            margin-top: 10px;
-            min-height: 20px; /* Reserve space */
-        }
-        
-        .reveal-answer-text {
-            font-weight: bold;
-            color: #cc0000;
-        }
-        
-        .puzzle-controls {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-        
-        /* --- Level 2 Specifics (Word Tile Puzzle) --- */
-        #picture-puzzle-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3x3 grid */
-            grid-template-rows: repeat(3, 1fr);
-            width: 300px; /* Fixed size for a 3x3 grid */
-            height: 300px;
-            border: 3px solid #6a6a6a;
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+/* --- Big Home Button --- */
+.big-home-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #990000;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+.big-home-button:hover {
+    background-color: #660000;
+    transform: translateY(-2px);
+}
 
-        .puzzle-piece {
-            width: 100%;
-            height: 100%;
-            background-color: #a0a0a0; /* Gray background for tiles */
-            cursor: pointer;
-            border: 1px solid #c0c0c0; /* Subtle border between pieces */
-            transition: background-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
-            user-select: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 800; /* Extra bold for letters */
-            font-size: 2.5em; /* Large letters */
-            color: white;
-            text-shadow: 1px 1px 3px #333;
-        }
+/* --- Level Menu Items --- */
+.menu-item {
+    display: block;
+    width: 85%;
+    text-align: center;
+    margin: 10px 0;
+    padding: 14px;
+    background-color: #ffd6d6;
+    border: 2px solid #ff8080;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.menu-item:hover {
+    background-color: #ffb3b3;
+}
 
-        .puzzle-piece:hover {
-            background-color: #8c8c8c;
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
-            transform: scale(1.03);
-            z-index: 1; /* Bring slightly forward on hover */
-        }
+/* --- Level 2 Tile Puzzle --- */
+#picture-puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 320px;
+    height: 320px;
+    border: 4px solid #b22222;
+    margin: 20px auto;
+    box-shadow: 0 5px 10px rgba(178, 34, 34, 0.3);
+    border-radius: 8px;
+}
+.puzzle-piece {
+    width: 100%;
+    height: 100%;
+    background-color: #cc3333;
+    color: #fff;
+    font-weight: 800;
+    font-size: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #990000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease-out;
+}
+.puzzle-piece:hover {
+    background-color: #ff6666;
+    transform: scale(1.05);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+.puzzle-piece.selected {
+    border: 3px solid #ff4d4d;
+    box-shadow: 0 0 15px #ff4d4d;
+    background-color: #ff9999;
+}
 
-        .puzzle-piece.selected {
-            border: 3px solid #a04040; /* Highlight selected piece */
-            box-shadow: 0 0 15px #a04040;
-            background-color: #cc6666; /* Light red when selected */
-            transform: scale(1.05);
-        }
-
-        .piece-number {
-            display: none; /* Hide the number indicators */
-        }
-        
-        @media (max-width: 600px) {
-             #picture-puzzle-grid {
-                width: 270px; 
-                height: 270px;
-            }
-            .puzzle-piece {
-                font-size: 2em;
-            }
-        }
-    </style>
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    #picture-puzzle-grid {
+        width: 270px;
+        height: 270px;
+    }
+    .puzzle-piece {
+        font-size: 2em;
+    }
+}
+</style>
 </head>
 <body id="game-body">
 
