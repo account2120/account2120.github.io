@@ -5,341 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Pressure Puzzle Game - Homepage</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* START style.css - All CSS is now inline within the <style> tag */
-        
-        /* Color Palette Definitions */
-        :root {
-            --color-primary-blue: #007bff;     /* Main Blue - Medical/Calmness */
-            --color-danger-red: #ff2f41;       /* Red - Warning/Hypertension */
-            --color-accent-yellow: #f6ff3c;    /* Yellow - Attention/Call to Action */
-            --color-text-dark: #343a40;        /* Dark text */
-            --color-text-light: #f8f9fa;       /* Light text/background */
-            --color-background-light: #ffffff; /* Page background */
-            --color-level-bg: #e9ecef;         /* Level block background */
-        }
-
-        /* Global Styles */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-background-light); 
-            color: var(--color-text-dark);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: var(--color-primary-blue);
-            color: var(--color-text-light);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--color-accent-yellow); 
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 5px;
-        }
-
-        main {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        h2 {
-            border-bottom: 3px solid var(--color-danger-red); 
-            padding-bottom: 8px;
-            margin-top: 30px;
-            color: var(--color-primary-blue);
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #ccc;
-            margin: 30px 0;
-        }
-
-        /* Features/Levels List */
-        #features ul {
-            list-style: none; 
-            padding-left: 0;
-        }
-
-        #features li {
-            background-color: var(--color-level-bg);
-            margin-bottom: 15px;
-            padding: 15px;
-            border-left: 6px solid var(--color-primary-blue); 
-            border-radius: 5px;
-            font-weight: 600; 
-            transition: background-color 0.3s;
-        }
-        #features li:hover {
-            background-color: #dee2e6;
-        }
-
-        .level-description {
-            font-weight: 300;
-            font-size: 0.95em;
-            margin-top: 5px;
-            padding-top: 5px;
-            border-top: 1px dashed #adb5bd;
-        }
-
-        /* Call to Action Button */
-        .centered-game-button {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .navigation-button {
-            display: inline-block;
-            text-decoration: none;
-            background-color: var(--color-accent-yellow); 
-            color: var(--color-danger-red); 
-            padding: 15px 30px;
-            font-size: 1.2em;
-            font-weight: 800; 
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.2s, transform 0.2s;
-            border: none;
-        }
-
-        .navigation-button:hover {
-            background-color: #ffda6a; 
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: var(--color-primary-blue);
-            color: var(--color-text-light);
-            margin-top: 40px;
-            font-size: 0.85em;
-        }
-
-        /* LEVEL III PUZZLE STYLES */
-        #level-iii-puzzle-container {
-            border: 2px solid var(--color-danger-red); 
-            background-color: #fff3cd; 
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .puzzle-title {
-            color: var(--color-danger-red);
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .bp-button {
-            background-color: var(--color-primary-blue);
-            color: var(--color-text-light);
-            border: none;
-            padding: 10px 15px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            /* Transition for the disappearing effect */
-            transition: background-color 0.15s, transform 0.1s, opacity 0.3s, height 0.3s, margin 0.3s, padding 0.3s;
-            display: inline-block; 
-        }
-
-        .bp-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.02);
-        }
-
-        .bp-button:active {
-            background-color: #004085;
-        }
-
-        /* Feedback Styles */
-        #feedback-area p {
-            font-weight: 600;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        #feedback-area p[style*="red"] {
-            background-color: #f8d7da; 
-            color: var(--color-danger-red);
-            border: 1px solid var(--color-danger-red);
-        }
-        #feedback-area p[style*="blue"] {
-            background-color: #d1ecf1; 
-            color: var(--color-primary-blue);
-            border: 1px solid var(--color-primary-blue);
-        }
-        /* END style.css */
-    </style>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
     <header>
-        <h1>Blood Pressure Puzzle Game</h1>
-        <p>A vital health education tool created for Pauley Heart Center (VCU Health)</p>
+        <nav aria-label="Main Navigation">
+            <h1>Blood Pressure Puzzle Game</h1>
+            <p>Created for Pauley Heart Center (VCU Health) by students at CodeRVA Regional Highschool</p>
+        </nav>
     </header>
 
     <main>
         <section id="about">
-            <h2>🧠 About the Game</h2>
-            <p>Welcome! This interactive puzzle game is designed to help you master the essentials of blood pressure and heart health. Navigate the levels to understand your body's most vital pump, learn the risks of hypertension, and gain the skills to monitor and manage your health effectively.</p>
+            <h2>About</h2>
+            <p>This educational game is designed to help students, patients, and families understand the critical aspects of blood pressure monitoring and management, delivered through an engaging, puzzle-based learning approach.</p>
+            <p>Master the four stages of blood pressure and learn effective preventative measures endorsed by cardiac professionals.</p>
         </section>
-        
-        <hr>
 
         <section id="features">
-            <h2>🧩 Game Levels & Learning Modules</h2>
+            <h2>Levels in the Blood Pressure Learning Puzzle Game</h2>
             <ul>
-                <li>Level I: Intro to the Heart and its Functions
-                    <div class="level-description">This module covers basic cardiac anatomy and the two key measurements: systolic and diastolic readings.</div>
+                <li>Level I: Intro to the Heart and its functions
+                    <div class="level-description">This introductory module covers basic cardiac anatomy, the mechanics of blood flow, and the two key measurements that make up blood pressure: systolic and diastolic readings.</div>
                 </li>
                 <li>Level II: BP & the Dangers of Hypertension
-                    <div class="level-description">Explore the serious risks associated with high blood pressure (hypertension), including stroke, heart attack, and kidney failure.</div>
+                    <div class="level-description">Explore the risks associated with high blood pressure (hypertension), including stroke, heart attack, and kidney failure. This level emphasizes why regular monitoring is vital for long-term health.</div>
                 </li>
-                
-                <li id="level-iii-puzzle-container">
-                    Level III: How to Take a BP and Identify High BP (Live Puzzle Demo!)
-                    <div class="level-description">
-                        <div id="level-three-puzzle">
-                            <h3 class="puzzle-title">Patient BP Reading: <span id="bp-reading">145/92 mmHg</span></h3>
-                            <p>Based on this reading, categorize the result and recommend the next action:</p>
-
-                            <div id="decision-buttons">
-                                <button class="bp-button" data-action="categorize">Stage 2 Hypertension</button>
-                                <button class="bp-button" data-action="categorize">Elevated</button>
-                                <button class="bp-button" data-action="recommend">Schedule Follow-up</button>
-                                <button class="bp-button" data-action="recommend">Re-test in 1 Year</button>
-                            </div>
-
-                            <div id="feedback-area"></div>
-                        </div>
-                    </div>
+                <li>Level III: How to take a BP and identify High BP
+                    <div class="level-description">Learn the proper technique for taking blood pressure using an automated cuff. Practice reading the numbers to correctly categorize them according to current medical guidelines (Normal, Elevated, Stage 1, Stage 2).</div>
                 </li>
-                
-                <li>Level IV: Preventative Measures
-                    <div class="level-description">Focuses on lifestyle changes and medical interventions used to manage and prevent hypertension. Topics include diet (DASH), exercise, and stress reduction.</div>
+                <li>Level IV: Preventative measures
+                    <div class="level-description">Focuses on lifestyle changes and medical interventions used to manage and prevent hypertension. Topics include diet (DASH), exercise, stress reduction, and common medication types.</div>
                 </li>
-                <li>Level V: Comprehensive Overview
-                    <div class="level-description">A comprehensive review module combining knowledge from all previous levels to test your understanding.</div>
+                <li>Level V: Overview
+                    <div class="level-description">A comprehensive review module combining knowledge from all previous levels. This final stage tests your understanding of blood pressure monitoring and management.</div>
                 </li>
             </ul>
         </section>
 
         <div class="centered-game-button">
             <a href="game.html" class="navigation-button">
-                START THE FULL GAME &rarr;
+                START THE GAME &rarr;
             </a>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 Simple Site. All Rights Reserved. | Created by CodeRVA for VCU Health</p>
+        <p>&copy; 2025 Pauley Heart Center. All Rights Reserved.</p>
     </footer>
 
-    <script>
-        /* START script.js - All JavaScript is now inline within the <script> tag */
-        document.addEventListener('DOMContentLoaded', () => {
-            // Correct answers for the reading 145/92 mmHg
-            const CORRECT_CATEGORY_TEXT = 'Stage 2 Hypertension';
-            const CORRECT_ACTION_TEXT = 'Schedule Follow-up';
-
-            const decisionButtonsContainer = document.getElementById('decision-buttons');
-            const feedbackArea = document.getElementById('feedback-area');
-            let categorizedCorrectly = false; // State variable to track the first step
-
-            if (!decisionButtonsContainer) {
-                console.error("Decision buttons container not found. Cannot run puzzle logic.");
-                return;
-            }
-
-            // Set up the event listener on the parent container (Event Delegation)
-            decisionButtonsContainer.addEventListener('click', (event) => {
-                const clickedButton = event.target;
-                // Check if the clicked element is a button
-                if (clickedButton.classList.contains('bp-button')) {
-                    const buttonType = clickedButton.getAttribute('data-action');
-
-                    if (buttonType === 'categorize') {
-                        handleCategorization(clickedButton);
-                    } else if (buttonType === 'recommend' && categorizedCorrectly) {
-                        // Only allow action if categorization is done
-                        handleRecommendation(clickedButton);
-                    } else if (buttonType === 'recommend' && !categorizedCorrectly) {
-                        // User tried to recommend action before categorizing
-                        feedbackArea.innerHTML = '<p style="color: red;">❌ First, you must correctly categorize the BP!</p>';
-                    }
-                }
-            });
-
-            function handleCategorization(button) {
-                if (button.textContent.trim() === CORRECT_CATEGORY_TEXT) {
-                    feedbackArea.innerHTML = '<p style="color: blue;">✅ Correct Category! Stage 2 Hypertension identified. Now, select the appropriate next action.</p>';
-                    
-                    // 1. MAKE ALL CATEGORY BUTTONS DISAPPEAR
-                    document.querySelectorAll('#decision-buttons [data-action="categorize"]').forEach(btn => {
-                        // Smoothly hide the buttons using CSS transitions
-                        btn.style.opacity = '0';
-                        btn.style.height = '0';
-                        btn.style.margin = '0';
-                        btn.style.padding = '0';
-                        setTimeout(() => btn.style.display = 'none', 300); 
-                    });
-                    
-                    categorizedCorrectly = true;
-                    
-                } else {
-                    feedbackArea.innerHTML = '<p style="color: red;">❌ Incorrect. Review the BP guidelines and try again!</p>';
-                }
-            }
-
-            function handleRecommendation(button) {
-                if (button.textContent.trim() === CORRECT_ACTION_TEXT) {
-                    feedbackArea.innerHTML = '<p style="color: blue;">🎉 LEVEL COMPLETE! Correct action for Stage 2 is immediate follow-up to manage risk.</p>';
-                    
-                    // 2. MAKE ALL ACTION BUTTONS DISAPPEAR
-                    document.querySelectorAll('#decision-buttons [data-action="recommend"]').forEach(btn => {
-                        btn.style.opacity = '0';
-                        btn.style.height = '0';
-                        btn.style.margin = '0';
-                        btn.style.padding = '0';
-                        setTimeout(() => btn.style.display = 'none', 300);
-                    });
-                    
-                    // 3. APPEAR NEW BUTTON TO MOVE TO NEXT LEVEL
-                    const nextButton = document.createElement('a');
-                    nextButton.href = '#'; // Link to the next game level
-                    nextButton.className = 'navigation-button'; 
-                    nextButton.style.marginTop = '15px';
-                    nextButton.textContent = 'Nice job!!';
-                    
-                    // Append the new button to the container
-                    const existingStartButton = document.querySelector('.centered-game-button .navigation-button');
-                    if (existingStartButton) {
-                        // For the demo, let's append it to the puzzle area itself for simplicity
-                        const puzzleDiv = document.getElementById('level-three-puzzle');
-                        puzzleDiv.appendChild(nextButton);
-                    } else {
-                        // Fallback, should not happen if HTML is correct
-                        decisionButtonsContainer.appendChild(nextButton);
-                    }
-                
-                } else {
-                    feedbackArea.innerHTML = '<p style="color: red;">❌ Incorrect Action. This is a severe reading; a simple re-test is not sufficient.</p>';
-                }
-            }
-        });
-        /* END script.js */
-    </script>
+    <script src="scrool.js"></script>
 </body>
 </html>
-
-
-
