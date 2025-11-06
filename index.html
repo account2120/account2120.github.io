@@ -3,58 +3,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Pressure Puzzle Game - Homepage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> 
+    <title>Heart Heroes Training Game - Level 1, 2, 3 & 4</title>
+    <style>
+        /* --- General and Layout (Blood Pressure Theme & Centering) --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #222;
+    text-align: center;
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('image_23fe3f.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.level-1-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+}
+.level-2-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+}
+/* New style for level 3 matching game */
+.level-3-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.66); /* only background is transparent */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.screen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#main-menu {
+    padding-top: 0;
+}
+
+h1, h2 {
+    color: #b30000; /* Blood pressure red */
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+p {
+    margin: 10px 0;
+}
+
+button {
+    background-color: #0073e6; /* BP blue */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+button:hover {
+    background-color: #005bb5;
+    transform: scale(1.05);
+}
+.hint-button { background-color: #ff6666; } /* light red */
+.hint-button:hover { background-color: #e65c5c; }
+.reveal-button { background-color: #b30000; } /* dark red */
+.reveal-button:hover { background-color: #800000; }
+
+.question-container {
+    border: 1px solid #b30000;
+    padding: 15px;
+    margin: 15px 0;
+    width: 90%;
+    border-radius: 6px;
+    background-color: #fff;
+    text-align: left;
+}
+
+.question-text {
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #b30000;
+}
+
+.answer-choice {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    background-color: #e6f2ff; /* pale BP blue */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.answer-choice:hover { background-color: #cce0ff; }
+.answer-choice.selected-choice {
+    border: 2px solid #b30000;
+    background-color: #ffcccc; /* pale red */
+}
+
+.big-home-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #b30000;
+    color: white;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+.big-home-button:hover { background-color: #800000; }
+
+.menu-item {
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 10px 0;
+    padding: 12px;
+    background-color: #e6f2ff;
+    border: 1px solid #b30000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.menu-item:hover { background-color: #cce0ff; }
+
+.puzzle-container {
+    border: 1px solid #b30000;
+    padding: 15px;
+    margin: 15px 0;
+    width: 90%;
+    border-radius: 6px;
+    background-color: rgba(255, 230, 230, 0.6);
+}
+
+.puzzle-input {
+    padding: 10px;
+    font-size: 18px;
+    margin: 10px 0; 
+    border: 2px solid #b30000;
+    border-radius: 4px;
+    text-transform: lowercase;
+    text-align: center;
+    max-width: 90%;
+}
+
+.feedback { 
+    margin-top: 15px; 
+    font-weight: bold; 
+    min-height: 20px; 
+    color: #b30000;
+}
+.correct { color: #008000; } /* green for correct */
+.incorrect { color: #b30000; } /* red for incorrect */
+
+.scrambled-word { 
+    font-size: 28px; 
+    font-weight: bold; 
+    color: #b30000; 
+    letter-spacing: 2px; 
+    margin-bottom: 10px; 
+    display: block; 
+}
+
+.hint-text { 
+    font-style: italic; 
+    color: #990000; 
+    margin-top: 10px; 
+    min-height: 20px; 
+    display: none; 
+}
+.reveal-answer-text { 
+    font-weight: bold; 
+    color: #b30000; 
+}
+
+.puzzle-controls { 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    margin-top: 10px; 
+}
+
+#picture-puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 300px;
+    height: 300px;
+    border: 3px solid #b30000;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.puzzle-piece {
+    width: 100%;
+    height: 100%;
+    background-color: #ff6666; /* red tone */
+    cursor: pointer;
+    border: 1px solid #b30000;
+    transition: background-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 2.5em;
+    color: white;
+    text-shadow: 1px 1px 3px #333;
+}
+.puzzle-piece:hover { 
+    background-color: #cc4d4d; 
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5); 
+    transform: scale(1.03); 
+    z-index: 1; 
+}
+.puzzle-piece.selected { 
+    border: 3px solid #0073e6; 
+    box-shadow: 0 0 15px #0073e6; 
+    background-color: #3399ff; 
+    transform: scale(1.05); 
+}
+
+/* --- Level 3 Matching Styles --- */
+#matching-puzzle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    margin-top: 20px;
+    user-select: none;
+}
+.matching-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 45%;
+}
+.matching-item {
+    background-color: #f2f2f2;
+    border: 2px solid #b30000;
+    padding: 10px;
+    margin: 8px 0;
+    width: 100%;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s, border-color 0.2s;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+}
+.matching-item:hover {
+    background-color: #ffe0e0;
+}
+.matching-item.selected {
+    background-color: #b30000;
+    color: white;
+    border-color: #0073e6;
+    transform: scale(1.02);
+}
+.matching-item.matched {
+    background-color: #e6ffe6; /* Light Green */
+    border-color: #008000; /* Dark Green */
+    cursor: default;
+    color: #008000;
+    font-weight: bold;
+}
+.matching-item.matched.left {
+    background-color: #ccffcc;
+}
+.matching-item.matched.right {
+    background-color: #99e699;
+}
+
+@media (max-width: 600px) {
+    #picture-puzzle-grid { width: 270px; height: 270px; }
+    .puzzle-piece { font-size: 2em; }
+    #matching-puzzle { flex-direction: column; }
+    .matching-column { width: 100%; align-items: center; }
+    .matching-item { width: 90%; text-align: center; }
+}
+
+    </style>
 </head>
-<body>
+<body id="game-body">
+    <div class="container">
+        <a id="big-home-button" class="big-home-button" href="game.html">Home</a>
 
-    <header>
-        <nav aria-label="Main Navigation">
-            <h1>Blood Pressure Puzzle Game</h1>
-            <p>Created for Pauley Heart Center (VCU Health) by students at CodeRVA Regional Highschool</p>
-        </nav>
-    </header>
-
-    <main>
-        <section id="about">
-            <h2>About</h2>
-            <p>This educational game is designed to help students, patients, and families understand the critical aspects of blood pressure monitoring and management, delivered through an engaging, puzzle-based learning approach.</p>
-            <p>Master the four stages of blood pressure and learn effective preventative measures endorsed by cardiac professionals.</p>
-        </section>
-
-        <section id="features">
-            <h2>Levels in the Blood Pressure Learning Puzzle Game</h2>
-            <ul>
-                <li>Level I: Intro to the Heart and its functions
-                    <div class="level-description">This introductory module covers basic cardiac anatomy, the mechanics of blood flow, and the two key measurements that make up blood pressure: systolic and diastolic readings.</div>
-                </li>
-                <li>Level II: BP & the Dangers of Hypertension
-                    <div class="level-description">Explore the risks associated with high blood pressure (hypertension), including stroke, heart attack, and kidney failure. This level emphasizes why regular monitoring is vital for long-term health.</div>
-                </li>
-                <li>Level III: How to take a BP and identify High BP
-                    <div class="level-description">Learn the proper technique for taking blood pressure using an automated cuff. Practice reading the numbers to correctly categorize them according to current medical guidelines (Normal, Elevated, Stage 1, Stage 2).</div>
-                </li>
-                <li>Level IV: Preventative measures
-                    <div class="level-description">Focuses on lifestyle changes and medical interventions used to manage and prevent hypertension. Topics include diet (DASH), exercise, stress reduction, and common medication types.</div>
-                </li>
-                <li>Level V: Overview
-                    <div class="level-description">A comprehensive review module combining knowledge from all previous levels. This final stage tests your understanding of blood pressure monitoring and management.</div>
-                </li>
-            </ul>
-        </section>
-
-        <div class="centered-game-button">
-            <a href="game.html" class="navigation-button">
-                START THE GAME &rarr;
-            </a>
+        <div id="main-menu" class="screen">
+            <h1>Heart Heroes Ambassador Training</h1>
+            <p>Gamifying a training for the Heart Heroes Ambassador Program</p>
+            <p>Welcome to your training mission!</p>
+            <button onclick="showScreen('level-select')">Play Game</button>
+            <button onclick="showScreen('level-select')">Choose Levels</button>
+            <button onclick="showScreen('settings-menu')">Settings</button>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2025 Pauley Heart Center. All Rights Reserved.</p>
-    </footer>
+        <div id="level-select" class="screen" style="display: none;">
+    <h1>Choose Your Level</h1>
+    <div class="menu-item" onclick="startGame(1)">Level 1: Vital Signs Scramble (Core Concepts)</div>
+    <div class="menu-item" onclick="startGame(2)">Level 2: Heart Word Scramble (HEARTBEAT)</div>
+    <div class="menu-item" onclick="startGame(4)">Level 2.1: Blood Pressure Quiz (Measurement)</div>
+    <div class="menu-item" onclick="startGame(5)">Level 2.2: Healthy Habits Challenge (True/False)</div>
+    <div class="menu-item" onclick="startGame(3)">Level 3: Heart-Healthy Matching (Diet & Exercise)</div>
+    <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+</div>
 
-    <script src="scrool.js"></script>
+        <div id="settings-menu" class="screen" style="display: none;">
+            <h1>Settings</h1>
+            <p>Settings options would go here.</p>
+            <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+        </div>
+
+        <div id="level-1-game" class="screen" style="display: none;">
+            <h2>Level 1: Vital Signs Scramble 🧩</h2>
+            <p>Unscramble these six words related to the human circulatory system and leading a heart-healthy life!</p>
+            <div id="puzzles-container"></div>
+            <button id="check-all-button" onclick="checkAllAnswers()">Check All Puzzles</button>
+            <div id="level-feedback" class="feedback"></div>
+            <button id="next-level-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 1</button>
+        </div>
+
+        <div id="level-2-game" class="screen" style="display: none;">
+            <h2>Level 2: Heart Word Scramble (HEARTBEAT) 🔠</h2>
+            <p>Swap the letter tiles to spell the word HEARTBEAT across the three rows!</p>
+            <div id="picture-puzzle-grid"></div>
+            <div id="level-2-feedback" class="feedback">Click two tiles to swap their letters.</div>
+            <button onclick="shufflePicturePuzzle()">Shuffle</button>
+            <button onclick="checkPicturePuzzle()">Check Word</button>
+            <button id="level-2-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 2</button>
+        </div>
+        
+        <div id="level-3-game" class="screen" style="display: none;">
+            <h2>Level 3: Heart-Healthy Matching 🔗</h2>
+            <p>Match the term on the left with the correct definition on the right!</p>
+            <div id="matching-puzzle">
+                <div id="left-column" class="matching-column">
+                    </div>
+                <div id="right-column" class="matching-column">
+                    </div>
+            </div>
+            <div id="matching-feedback" class="feedback">Click an item on the left, then click its match on the right.</div>
+            <button id="level-3-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 3</button>
+        </div>
+
+        <div id="level-4-game" class="screen" style="display: none;">
+            <h2>Level 4 (2.1): Blood Pressure Quiz 🤔</h2>
+            <div id="quiz-container-4"></div>
+            <button onclick="submitQuiz(4)">Submit Answers</button>
+            <div id="level-4-feedback" class="feedback"></div>
+            <button id="level-4-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 4 (2.1)</button>
+        </div>
+
+        <div id="level-5-game" class="screen" style="display: none;">
+            <h2>Level 5 (2.2): Healthy Habits Challenge ✅/❌</h2>
+            <div id="quiz-container-5"></div>
+            <button onclick="submitQuiz(5)">Submit Answers</button>
+            <div id="level-5-feedback" class="feedback"></div>
+            <button id="level-5-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 5 (2.2)</button>
+        </div>
+    </div>
+
+    <script>
+        // --- HELPER FUNCTIONS ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const screens = {
+            'main-menu': document.getElementById('main-menu'),
+            'level-select': document.getElementById('level-select'),
+            'settings-menu': document.getElementById('settings-menu'),
+            'level-1-game': document.getElementById('level-1-game'),
+            'level-2-game': document.getElementById('level-2-game'),
+            'level-3-game': document.getElementById('level-3-game'), 
+            'level-4-game': document.getElementById('level-4-game'),
+            'level-5-game': document.getElementById('level-5-game')
+        };
+        const gameBody = document.getElementById('game-body');
+        const puzzlesContainer = document.getElementById('puzzles-container');
+
+        function showScreen(screenId) {
+            gameBody.classList.remove('level-1-bg', 'level-2-bg', 'level-3-bg');
+            for (let id in screens) screens[id].style.display = 'none';
+            screens[screenId].style.display = 'flex';
+            if (screenId === 'level-1-game') gameBody.classList.add('level-1-bg');
+            if (screenId === 'level-2-game') gameBody.classList.add('level-2-bg');
+            if (screenId === 'level-3-game') gameBody.classList.add('level-3-bg');
+        }
+
+        function startGame(level) {
+            showScreen('level-' + level + '-game');
+            if (level === 1) setupLevel1();
+            if (level === 2) setupPicturePuzzle();
+            if (level === 3) setupMatchingPuzzle();
+            if (level === 4) setupQuiz(4); // NOTE: This is the old Level 3
+            if (level === 5) setupQuiz(5); // NOTE: This is the old Level 4
+        }
+
+        // ---------------- LEVEL 1 ----------------
+        const level1Puzzles = [
+            { scrambled: 'stniefis', word: 'fitness', hint: 'Physical activity that strengthens your body' },
+            { scrambled: 'rhaet', word: 'heart', hint: 'This organ pumps blood' },
+            { scrambled: 'seahbpprue', word: 'pressure', hint: 'Force of blood on arteries' },
+            { scrambled: 'aehlt', word: 'health', hint: 'Overall condition of body and mind' },
+            { scrambled: 'niutrtio', word: 'nutrition', hint: 'Food and diet for a healthy body' },
+            { scrambled: 'rbledo', word: 'blood', hint: 'Carries oxygen in the body' }
+        ];
+
+        function setupLevel1() {
+            puzzlesContainer.innerHTML = '';
+            level1Puzzles.forEach((puzzle, index) => {
+                const puzzleDiv = document.createElement('div');
+                puzzleDiv.className = 'puzzle-container';
+                puzzleDiv.innerHTML = `
+                    <div class="scrambled-word">${puzzle.scrambled.toUpperCase()}</div>
+                    <input type="text" id="puzzle-input-${index}" class="puzzle-input" placeholder="Type your answer">
+                    <button class="hint-button" onclick="showHint(${index})">Hint</button>
+                    <div class="hint-text" id="hint-text-${index}">${puzzle.hint}</div>
+                `;
+                puzzlesContainer.appendChild(puzzleDiv);
+            });
+            document.getElementById('level-feedback').textContent = '';
+            document.getElementById('next-level-button').style.display = 'none';
+        }
+
+        function showHint(index) {
+            const hintDiv = document.getElementById(`hint-text-${index}`);
+            hintDiv.style.display = hintDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function checkAllAnswers() {
+            let allCorrect = true;
+            level1Puzzles.forEach((puzzle, index) => {
+                const input = document.getElementById(`puzzle-input-${index}`).value.trim().toLowerCase();
+                if (input === puzzle.word) {
+                    document.getElementById(`puzzle-input-${index}`).classList.add('correct');
+                } else {
+                    document.getElementById(`puzzle-input-${index}`).classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+            const feedback = document.getElementById('level-feedback');
+            if (allCorrect) {
+                feedback.textContent = 'Great job! All puzzles correct!';
+                feedback.className = 'feedback correct';
+                document.getElementById('next-level-button').style.display = 'block';
+            } else {
+                feedback.textContent = 'Some answers are incorrect. Try again or use hints!';
+                feedback.className = 'feedback incorrect';
+            }
+        }
+
+        // ---------------- LEVEL 2 ----------------
+        const CORRECT_WORD_TILES = ['H', 'E', 'A', 'R', 'T', 'B', 'E', 'A', 'T'];
+        let currentTileLetters = [];
+
+        function setupPicturePuzzle() {
+            currentTileLetters = [...CORRECT_WORD_TILES];
+            shuffleArray(currentTileLetters);
+            renderPicturePuzzle();
+            document.getElementById('level-2-feedback').textContent = 'Click two tiles to swap their letters.';
+            document.getElementById('level-2-next-button').style.display = 'none';
+            selectedTile = null;
+        }
+
+        const grid = document.getElementById('picture-puzzle-grid');
+        let selectedTile = null;
+
+        function renderPicturePuzzle() {
+            grid.innerHTML = '';
+            currentTileLetters.forEach((letter, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'puzzle-piece';
+                tile.textContent = letter;
+                tile.addEventListener('click', () => selectTile(index));
+                grid.appendChild(tile);
+            });
+        }
+
+        function selectTile(index) {
+            if (selectedTile === null) {
+                selectedTile = index;
+                grid.children[index].classList.add('selected');
+            } else {
+                [currentTileLetters[selectedTile], currentTileLetters[index]] = [currentTileLetters[index], currentTileLetters[selectedTile]];
+                grid.children[selectedTile].classList.remove('selected');
+                selectedTile = null;
+                renderPicturePuzzle();
+            }
+        }
+
+        function shufflePicturePuzzle() { setupPicturePuzzle(); }
+
+        function checkPicturePuzzle() {
+            const correct = currentTileLetters.join('') === CORRECT_WORD_TILES.join('');
+            const feedback = document.getElementById('level-2-feedback');
+            if (correct) {
+                feedback.textContent = 'Correct! You spelled HEARTBEAT!';
+                feedback.className = 'feedback correct';
+                document.getElementById('level-2-next-button').style.display = 'block';
+            } else {
+                feedback.textContent = 'Incorrect. Keep trying or shuffle the tiles.';
+                feedback.className = 'feedback incorrect';
+            }
+        }
+
+        // ---------------- NEW LEVEL 3: MATCHING ----------------
+        const matchingPairs = [
+            { left: 'Junk food:', right: 'has sugars, salts, and fats.', matchId: 1 },
+            { left: 'Healthy foods:', right: 'has vitamins and minerals.', matchId: 2 },
+            { left: 'Exercise:', right: 'strengthens the heart.', matchId: 3 }
+        ];
+
+        let leftItems = [];
+        let rightItems = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
+
+        function setupMatchingPuzzle() {
+            const leftColumn = document.getElementById('left-column');
+            const rightColumn = document.getElementById('right-column');
+            const feedback = document.getElementById('matching-feedback');
+            
+            leftColumn.innerHTML = '';
+            rightColumn.innerHTML = '';
+            feedback.textContent = 'Click an item on the left, then click its match on the right.';
+            document.getElementById('level-3-next-button').style.display = 'none';
+
+            // Reset state
+            leftItems = shuffleArray(matchingPairs.map(p => ({ text: p.left, id: p.matchId })));
+            rightItems = shuffleArray(matchingPairs.map(p => ({ text: p.right, id: p.matchId })));
+            selectedLeft = null;
+            selectedRight = null;
+            matchesFound = 0;
+
+            // Render Left Column
+            leftItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'matching-item left';
+                div.textContent = item.text;
+                div.dataset.matchId = item.id;
+                div.dataset.side = 'left';
+                div.addEventListener('click', () => handleMatchClick(div));
+                leftColumn.appendChild(div);
+            });
+
+            // Render Right Column
+            rightItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'matching-item right';
+                div.textContent = item.text;
+                div.dataset.matchId = item.id;
+                div.dataset.side = 'right';
+                div.addEventListener('click', () => handleMatchClick(div));
+                rightColumn.appendChild(div);
+            });
+        }
+
+        function handleMatchClick(element) {
+            if (element.classList.contains('matched')) return;
+
+            if (element.dataset.side === 'left') {
+                if (selectedLeft) selectedLeft.classList.remove('selected');
+                selectedLeft = element;
+                selectedLeft.classList.add('selected');
+            } else { // right side
+                if (selectedRight) selectedRight.classList.remove('selected');
+                selectedRight = element;
+                selectedRight.classList.add('selected');
+            }
+
+            checkMatch();
+        }
+
+        function checkMatch() {
+            const feedback = document.getElementById('matching-feedback');
+            
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.dataset.matchId === selectedRight.dataset.matchId) {
+                    // Match found
+                    selectedLeft.classList.remove('selected');
+                    selectedRight.classList.remove('selected');
+                    selectedLeft.classList.add('matched');
+                    selectedRight.classList.add('matched');
+                    feedback.textContent = 'Match found! Keep going!';
+                    feedback.className = 'feedback correct';
+                    matchesFound++;
+
+                    // Clear selections
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    if (matchesFound === matchingPairs.length) {
+                        feedback.textContent = 'You successfully matched all the pairs! Level 3 complete!';
+                        document.getElementById('level-3-next-button').style.display = 'block';
+                    }
+
+                } else {
+                    // Incorrect match
+                    feedback.textContent = 'Incorrect match. Try again!';
+                    feedback.className = 'feedback incorrect';
+
+                    // Clear selections after a brief pause
+                    setTimeout(() => {
+                        if (selectedLeft) selectedLeft.classList.remove('selected');
+                        if (selectedRight) selectedRight.classList.remove('selected');
+                        selectedLeft = null;
+                        selectedRight = null;
+                    }, 500);
+                }
+            } else if (selectedLeft || selectedRight) {
+                 feedback.textContent = 'Select one item from each column to make a match.';
+                 feedback.className = 'feedback';
+            }
+        }
+
+
+        // ---------------- LEVEL 4 & 5 QUIZ (PREVIOUSLY 3 & 4) ----------------
+        const quizQuestions = {
+            4: [ // Old Level 3 / Level 2.1
+                { q: 'Normal adult blood pressure is around 120/80 mmHg.', a: 'true' },
+                { q: 'Systolic pressure is the bottom number.', a: 'false' },
+                { q: 'High blood pressure is called hypertension.', a: 'true' },
+                { q: 'Low blood pressure is always dangerous.', a: 'false' }
+            ],
+            5: [ // Old Level 4 / Level 2.2
+                { q: 'Eating vegetables helps your heart.', a: 'true' },
+                { q: 'Skipping exercise is healthy.', a: 'false' },
+                { q: 'Getting enough sleep protects your heart.', a: 'true' },
+                { q: 'Smoking is safe if you do not have high blood pressure.', a: 'false' }
+            ]
+        };
+
+        function setupQuiz(level) {
+            const container = document.getElementById('quiz-container-' + level);
+            container.innerHTML = '';
+            quizQuestions[level].forEach((q, i) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                qDiv.innerHTML = `
+                    <div class="question-text">${q.q}</div>
+                    <label class="answer-choice"><input type="radio" name="q${i}" value="true"> True</label>
+                    <label class="answer-choice"><input type="radio" name="q${i}" value="false"> False</label>
+                `;
+                container.appendChild(qDiv);
+            });
+            document.getElementById(`level-${level}-feedback`).textContent = '';
+            document.getElementById(`level-${level}-next-button`).style.display = 'none';
+        }
+
+        function submitQuiz(level) {
+            const container = document.getElementById('quiz-container-' + level);
+            let correctCount = 0;
+            quizQuestions[level].forEach((q, i) => {
+                const selected = container.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value.toLowerCase() === q.a.toLowerCase()) correctCount++;
+            });
+            const feedback = document.getElementById(`level-${level}-feedback`);
+            feedback.textContent = `You got ${correctCount} out of ${quizQuestions[level].length} correct.`;
+            feedback.className = correctCount === quizQuestions[level].length ? 'feedback correct' : 'feedback incorrect';
+            if (correctCount === quizQuestions[level].length) document.getElementById(`level-${level}-next-button`).style.display = 'block';
+        }
+    </script>
 </body>
 </html>
