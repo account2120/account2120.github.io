@@ -28,6 +28,10 @@ body {
 .level-3-bg {
     background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
 }
+/* NEW: Style for level 4 */
+.level-4-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+}
 
 .container {
     max-width: 800px;
@@ -115,6 +119,15 @@ button:hover {
     border: 2px solid #b30000;
     background-color: #ffcccc; /* pale red */
 }
+/* Style for correct answer indicator - now only showing letter */
+.correct-answer-indicator {
+    color: #b30000; /* Use blood pressure red for emphasis */
+    font-weight: bold;
+    margin-top: 5px;
+    display: none;
+    text-align: center;
+    font-size: 2em; /* Make the letter large */
+}
 
 .big-home-button {
     position: absolute;
@@ -163,6 +176,15 @@ button:hover {
     text-transform: lowercase;
     text-align: center;
     max-width: 90%;
+}
+/* Style for the 4-digit code input */
+#code-input {
+    font-size: 2em;
+    width: 150px;
+    letter-spacing: 15px;
+    text-align: center;
+    max-width: 150px; /* Restrict width */
+    text-transform: uppercase; /* Ensure letters are uppercase */
 }
 
 .feedback { 
@@ -323,6 +345,7 @@ button:hover {
     <div class="menu-item" onclick="startGame(4)">Level 2.1: Blood Pressure Quiz (Measurement)</div>
     <div class="menu-item" onclick="startGame(5)">Level 2.2: Healthy Habits Challenge (True/False)</div>
     <div class="menu-item" onclick="startGame(3)">Level 3: Heart-Healthy Matching (Diet & Exercise)</div>
+    <div class="menu-item" onclick="startGame(6)">Level 4: Knowledge Check & Code Entry</div>
     <button onclick="showScreen('main-menu')">Back to Main Menu</button>
 </div>
 
@@ -379,6 +402,21 @@ button:hover {
             <div id="level-5-feedback" class="feedback"></div>
             <button id="level-5-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 5 (2.2)</button>
         </div>
+        
+        <div id="level-6-game" class="screen" style="display: none;">
+            <h2>Level 4: Knowledge Check & Code Entry 🔐</h2>
+            <p>Reveal the correct answer for each question to find the 4-letter code!</p>
+            <div id="quiz-container-6"></div>
+            <hr style="width: 80%; border-color: #b30000; margin: 20px 0;">
+            <h3>Code Entry</h3>
+            <p>Enter the 4-letter code (Letters are the correct answer choices in order):</p>
+            <input type="text" id="code-input" maxlength="4" placeholder="e.g., BCAA">
+            <button onclick="checkCode()">Submit Code</button>
+            <div id="code-feedback" class="feedback"></div>
+            <button id="level-6-next-button" style="display: none;" onclick="showScreen('main-menu')">Mission Complete!</button>
+        </div>
+
+
     </div>
 
     <script>
@@ -399,18 +437,20 @@ button:hover {
             'level-2-game': document.getElementById('level-2-game'),
             'level-3-game': document.getElementById('level-3-game'), 
             'level-4-game': document.getElementById('level-4-game'),
-            'level-5-game': document.getElementById('level-5-game')
+            'level-5-game': document.getElementById('level-5-game'),
+            'level-6-game': document.getElementById('level-6-game') // Added Level 6
         };
         const gameBody = document.getElementById('game-body');
         const puzzlesContainer = document.getElementById('puzzles-container');
 
         function showScreen(screenId) {
-            gameBody.classList.remove('level-1-bg', 'level-2-bg', 'level-3-bg');
+            gameBody.classList.remove('level-1-bg', 'level-2-bg', 'level-3-bg', 'level-4-bg'); // Added level-4-bg
             for (let id in screens) screens[id].style.display = 'none';
             screens[screenId].style.display = 'flex';
             if (screenId === 'level-1-game') gameBody.classList.add('level-1-bg');
             if (screenId === 'level-2-game') gameBody.classList.add('level-2-bg');
             if (screenId === 'level-3-game') gameBody.classList.add('level-3-bg');
+            if (screenId === 'level-6-game') gameBody.classList.add('level-4-bg'); // Added background for new level 4
         }
 
         function startGame(level) {
@@ -418,8 +458,9 @@ button:hover {
             if (level === 1) setupLevel1();
             if (level === 2) setupPicturePuzzle();
             if (level === 3) setupMatchingPuzzle();
-            if (level === 4) setupQuiz(4); // NOTE: This is the old Level 3
-            if (level === 5) setupQuiz(5); // NOTE: This is the old Level 4
+            if (level === 4) setupQuiz(4); 
+            if (level === 5) setupQuiz(5); 
+            if (level === 6) setupQuiz(6); // Added setup for new Level 4
         }
 
         // ---------------- LEVEL 1 ----------------
@@ -458,6 +499,8 @@ button:hover {
             let allCorrect = true;
             level1Puzzles.forEach((puzzle, index) => {
                 const input = document.getElementById(`puzzle-input-${index}`).value.trim().toLowerCase();
+                // Clear previous correctness class
+                document.getElementById(`puzzle-input-${index}`).classList.remove('correct', 'incorrect');
                 if (input === puzzle.word) {
                     document.getElementById(`puzzle-input-${index}`).classList.add('correct');
                 } else {
@@ -530,11 +573,11 @@ button:hover {
             }
         }
 
-        // ---------------- NEW LEVEL 3: MATCHING ----------------
+        // ---------------- LEVEL 3: MATCHING ----------------
         const matchingPairs = [
-            { left: 'SOMETIMES FOODS:', right: 'HAVE SUGARS, SALTS, AND FATS', matchId: 1 },
-            { left: 'ALWAYS FOODS:', right: 'HAVE VITAMINS AND MINERALS', matchId: 2 },
-            { left: 'EXERCISE HELPS YOU:', right: 'STRENGTHENS THE HEART', matchId: 3 }
+            { left: 'Junk food:', right: 'has sugars, salts, and fats.', matchId: 1 },
+            { left: 'Healthy foods:', right: 'has vitamins and minerals.', matchId: 2 },
+            { left: 'Exercise:', right: 'strengthens the heart.', matchId: 3 }
         ];
 
         let leftItems = [];
@@ -590,13 +633,17 @@ button:hover {
                 if (selectedLeft) selectedLeft.classList.remove('selected');
                 selectedLeft = element;
                 selectedLeft.classList.add('selected');
+                if (selectedRight && selectedRight.classList.contains('selected')) {
+                    checkMatch(); // Check immediately if both are selected
+                }
             } else { // right side
                 if (selectedRight) selectedRight.classList.remove('selected');
                 selectedRight = element;
                 selectedRight.classList.add('selected');
+                if (selectedLeft && selectedLeft.classList.contains('selected')) {
+                    checkMatch(); // Check immediately if both are selected
+                }
             }
-
-            checkMatch();
         }
 
         function checkMatch() {
@@ -642,38 +689,125 @@ button:hover {
         }
 
 
-        // ---------------- LEVEL 4 & 5 QUIZ (PREVIOUSLY 3 & 4) ----------------
+        // ---------------- LEVEL 4, 5, & 6 QUIZ (PREVIOUSLY 3, 4, & NEW 4) ----------------
         const quizQuestions = {
-            4: [ // Old Level 3 / Level 2.1
+            4: [ // Old Level 3 / Level 2.1 - True/False
                 { q: 'Normal adult blood pressure is around 120/80 mmHg.', a: 'true' },
                 { q: 'Systolic pressure is the bottom number.', a: 'false' },
                 { q: 'High blood pressure is called hypertension.', a: 'true' },
                 { q: 'Low blood pressure is always dangerous.', a: 'false' }
             ],
-            5: [ // Old Level 4 / Level 2.2
+            5: [ // Old Level 4 / Level 2.2 - True/False
                 { q: 'Eating vegetables helps your heart.', a: 'true' },
                 { q: 'Skipping exercise is healthy.', a: 'false' },
                 { q: 'Getting enough sleep protects your heart.', a: 'true' },
                 { q: 'Smoking is safe if you do not have high blood pressure.', a: 'false' }
+            ],
+            6: [ // New Level 4 - Multiple Choice (Code is now BCAA)
+                { q: 'HOW BIG IS THE HEART?', options: ['A) FOOT SIZED', 'B) FIST SIZED', 'C) HEAD SIZED', 'D) SOFTBALL SIZED'], a: 'B', codeLetter: 'B' },
+                { q: 'AVERAGE HUMAN HEART RATE?', options: ['A) 50-60 BPM', 'B) 100-140 BPM', 'C) 60-100 BPM', 'D) 40-90 BPM'], a: 'C', codeLetter: 'C' },
+                { q: 'PREVENTATIVE MEASURES?', options: ['A) EATING HEALTHY', 'B) ANSWER 2', 'C) ANSWER 3', 'D) ANSWER 4'], a: 'A', codeLetter: 'A' },
+                { q: 'WHAT ARE THE THREE R\'s?', options: ['A) RIGHT, RELAX, RECORD', 'B) ANSWER 2', 'C) ANSWER 3', 'D) ANSWER 4'], a: 'A', codeLetter: 'A' }
             ]
         };
+        
+        // Storage for the correct code digits/letters
+        const codeDigits = {};
 
         function setupQuiz(level) {
             const container = document.getElementById('quiz-container-' + level);
             container.innerHTML = '';
+
             quizQuestions[level].forEach((q, i) => {
                 const qDiv = document.createElement('div');
                 qDiv.className = 'question-container';
-                qDiv.innerHTML = `
-                    <div class="question-text">${q.q}</div>
-                    <label class="answer-choice"><input type="radio" name="q${i}" value="true"> True</label>
-                    <label class="answer-choice"><input type="radio" name="q${i}" value="false"> False</label>
-                `;
+                let innerHTML = `<div class="question-text">${q.q}</div>`;
+
+                if (level === 4 || level === 5) { // True/False setup
+                    innerHTML += `
+                        <label class="answer-choice"><input type="radio" name="q${i}" value="true"> True</label>
+                        <label class="answer-choice"><input type="radio" name="q${i}" value="false"> False</label>
+                    `;
+                } else if (level === 6) { // Multiple Choice setup for new Level 4
+                    q.options.forEach((optionText, optionIndex) => {
+                        const optionValue = String.fromCharCode(65 + optionIndex); // A, B, C, D
+                        innerHTML += `
+                            <label class="answer-choice" data-correct-val="${optionValue}" onclick="selectQuizAnswer(this)">
+                                <input type="radio" name="q${i}" value="${optionValue}" style="display: none;"> ${optionText}
+                            </label>`;
+                    });
+                    
+                    // Add Show Answer button and indicator
+                    innerHTML += `
+                        <button class="reveal-button" onclick="showCorrectAnswer(this, ${i}, ${level})">Show Answer</button>
+                        <div class="correct-answer-indicator" id="correct-answer-indicator-${i}"></div>
+                    `;
+                    // Ensure codeDigits is reset for this question
+                    codeDigits[i] = null;
+                }
+                
+                qDiv.innerHTML = innerHTML;
                 container.appendChild(qDiv);
             });
-            document.getElementById(`level-${level}-feedback`).textContent = '';
-            document.getElementById(`level-${level}-next-button`).style.display = 'none';
+            
+            // Cleanup feedback and buttons
+            document.getElementById(`level-${level}-feedback`) && (document.getElementById(`level-${level}-feedback`).textContent = '');
+            document.getElementById(`level-${level}-next-button`) && (document.getElementById(`level-${level}-next-button`).style.display = 'none');
+            
+            if (level === 6) {
+                document.getElementById('code-feedback').textContent = '';
+                document.getElementById('level-6-next-button').style.display = 'none';
+                document.getElementById('code-input').value = '';
+            }
         }
+        
+        function selectQuizAnswer(label) {
+            const radio = label.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+                // Un-select all other labels in the same question-container
+                label.closest('.question-container').querySelectorAll('.answer-choice').forEach(otherLabel => {
+                    otherLabel.classList.remove('selected-choice');
+                });
+                // Select the clicked label
+                label.classList.add('selected-choice');
+            }
+        }
+
+        function showCorrectAnswer(button, questionIndex, level) {
+            const question = quizQuestions[level][questionIndex];
+            const indicator = document.getElementById(`correct-answer-indicator-${questionIndex}`);
+            const container = button.closest('.question-container');
+            
+            if (level === 6) {
+                // The code is the letter of the correct answer
+                const codeLetter = question.codeLetter;
+                
+                // MODIFICATION: Show only the correct answer letter (A, B, C, or D)
+                indicator.textContent = codeLetter; 
+                indicator.style.display = 'block';
+                
+                // Set the corresponding code letter
+                codeDigits[questionIndex] = codeLetter;
+            
+                // Visually highlight the correct option and remove selection from others
+                container.querySelectorAll('.answer-choice').forEach(label => {
+                    const input = label.querySelector('input[type="radio"]');
+                    const optionValue = input ? input.value : '';
+
+                    label.classList.remove('selected-choice'); // Clear selection
+                    
+                    if (optionValue === question.a) {
+                        label.style.backgroundColor = '#ccffcc'; // Light green highlight
+                    } else {
+                        label.style.backgroundColor = '#e6f2ff'; // Pale blue default
+                    }
+                });
+            }
+            
+            button.disabled = true; // Disable the button after showing the answer
+        }
+
 
         function submitQuiz(level) {
             const container = document.getElementById('quiz-container-' + level);
@@ -687,6 +821,54 @@ button:hover {
             feedback.className = correctCount === quizQuestions[level].length ? 'feedback correct' : 'feedback incorrect';
             if (correctCount === quizQuestions[level].length) document.getElementById(`level-${level}-next-button`).style.display = 'block';
         }
+
+        // ---------------- NEW LEVEL 4 (LEVEL 6 in script) CODE LOGIC ----------------
+        
+       function checkCode() {
+    const feedback = document.getElementById('code-feedback');
+    const codeInput = document.getElementById('code-input').value.trim().toUpperCase(); // Ensure uppercase for check
+    
+    // The letters are stored in the order of the questions (0, 1, 2, 3).
+    // This array collects the letters that have been revealed by the user.
+    const requiredCodeLetters = [0, 1, 2, 3].map(i => codeDigits[i]).filter(d => d !== null);
+    
+    // We explicitly check that 4 code letters have been collected.
+    const expectedCodeLength = 4; 
+    const allAnswersRevealed = requiredCodeLetters.length === expectedCodeLength; 
+    
+    // RECALCULATE the correct code every time the function is run.
+    const correctCode = requiredCodeLetters.join(''); 
+
+    // Check if all answers have been revealed (i.e., all codeDigits are set)
+    if (!allAnswersRevealed) {
+        feedback.textContent = 'Please press "Show Answer" for all four questions to determine the code.';
+        feedback.className = 'feedback incorrect';
+        return;
+    }
+
+    if (codeInput === correctCode) {
+        // Correct Answer
+        feedback.textContent = 'Code Accepted! Mission Complete! ✅';
+        feedback.className = 'feedback correct';
+        
+        // Disable the input and check button on success
+        document.getElementById('code-input').disabled = true;
+        document.getElementById('check-code-button').disabled = true;
+        
+        document.getElementById('level-6-next-button').style.display = 'block';
+    } else {
+        // Incorrect Answer: Provide encouraging feedback and allow infinite retries.
+        feedback.textContent = `Incorrect code. Review the sequence of the four revealed letters and try again! You have unlimited attempts.`;
+        feedback.className = 'feedback incorrect';
+        // The input and button remain active for infinite retries.
+    }
+}
+        
+        // Initialize the first screen
+        document.addEventListener('DOMContentLoaded', () => {
+            showScreen('main-menu');
+        });
+        
     </script>
 </body>
 </html>
