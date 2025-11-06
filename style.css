@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.7;
-    padding-top: 40px; 
+    /* Removed padding-top here. We'll manage header spacing on main. */
 }
 
 h1, h2 {
@@ -17,13 +17,20 @@ h1, h2 {
     font-weight: 800;
 }
 
+/* --- FIX: Main Content Spacing for Fixed Header --- */
+/* The issue is likely here. We need consistent top padding based on header height. */
 main {
     max-width: 800px;
     margin: 0 auto;
     padding: 30px 20px;
-    margin-top: 12%;
+    /* * Replacing margin-top: 12% with a fixed padding-top. 
+     * The fixed header is about 60px tall, so 100px gives good clearance.
+     * This ensures content doesn't get hidden behind the header.
+     */
+    padding-top: 100px; /* Adjust this value if your fixed header is taller/shorter */
     margin-bottom: 5%;
 }
+/* --- END FIX --- */
 
 p {
     margin-bottom: 1.5em; 
@@ -39,7 +46,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999; 
+    z-index: 1000; /* Ensure header is always on top of main content (z-index increased) */
     transform: translateY(0);
     transition: transform 0.3s ease-out;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -151,7 +158,7 @@ footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 999; 
+    z-index: 1000; /* Ensure footer is always visible (z-index increased) */
     transform: translateY(100%); 
     transition: transform 0.3s ease-out;
     box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
@@ -163,11 +170,17 @@ footer {
 
 @media (max-width: 600px) {
     body {
-        padding-top: 55px; 
+        /* Removed this, as spacing is handled by main now */
+        /* padding-top: 55px; */ 
     }
     header, main, footer {
         padding: 10px;
     }
+    /* --- FIX: Small Screen Spacing --- */
+    main {
+        padding-top: 80px; /* Reduced padding-top for smaller screens */
+    }
+    /* --- END FIX --- */
     section {
         padding: 25px;
     }
