@@ -22,7 +22,11 @@ body {
     background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
 }
 .level-2-bg {
-    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch2.png'); 
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+}
+/* New style for level 3 matching game */
+.level-3-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
 }
 
 .container {
@@ -237,16 +241,71 @@ button:hover {
     transform: scale(1.05); 
 }
 
+/* --- Level 3 Matching Styles --- */
+#matching-puzzle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    margin-top: 20px;
+    user-select: none;
+}
+.matching-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 45%;
+}
+.matching-item {
+    background-color: #f2f2f2;
+    border: 2px solid #b30000;
+    padding: 10px;
+    margin: 8px 0;
+    width: 100%;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s, border-color 0.2s;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+}
+.matching-item:hover {
+    background-color: #ffe0e0;
+}
+.matching-item.selected {
+    background-color: #b30000;
+    color: white;
+    border-color: #0073e6;
+    transform: scale(1.02);
+}
+.matching-item.matched {
+    background-color: #e6ffe6; /* Light Green */
+    border-color: #008000; /* Dark Green */
+    cursor: default;
+    color: #008000;
+    font-weight: bold;
+}
+.matching-item.matched.left {
+    background-color: #ccffcc;
+}
+.matching-item.matched.right {
+    background-color: #99e699;
+}
+
 @media (max-width: 600px) {
     #picture-puzzle-grid { width: 270px; height: 270px; }
     .puzzle-piece { font-size: 2em; }
+    #matching-puzzle { flex-direction: column; }
+    .matching-column { width: 100%; align-items: center; }
+    .matching-item { width: 90%; text-align: center; }
 }
 
     </style>
 </head>
 <body id="game-body">
     <div class="container">
-        <a id="big-home-button" class="big-home-button" href="index.html">Home</a>
+        <a id="big-home-button" class="big-home-button" href="game.html">Home</a>
 
         <div id="main-menu" class="screen">
             <h1>Heart Heroes Ambassador Training</h1>
@@ -258,13 +317,14 @@ button:hover {
         </div>
 
         <div id="level-select" class="screen" style="display: none;">
-            <h1>Choose Your Level</h1>
-            <div class="menu-item" onclick="startGame(1)">Level 1: Vital Signs Scramble (Core Concepts)</div>
-            <div class="menu-item" onclick="startGame(2)">Level 2: Heart Word Scramble (HEARTBEAT)</div>
-            <div class="menu-item" onclick="startGame(3)">Level 2.1: Blood Pressure Quiz (Measurement)</div>
-            <div class="menu-item" onclick="startGame(4)">Level 2.2: Healthy Habits Challenge (True/False)</div>
-            <button onclick="showScreen('main-menu')">Back to Main Menu</button>
-        </div>
+    <h1>Choose Your Level</h1>
+    <div class="menu-item" onclick="startGame(1)">Level 1: Vital Signs Scramble (Core Concepts)</div>
+    <div class="menu-item" onclick="startGame(2)">Level 2: Heart Word Scramble (HEARTBEAT)</div>
+    <div class="menu-item" onclick="startGame(4)">Level 2.1: Blood Pressure Quiz (Measurement)</div>
+    <div class="menu-item" onclick="startGame(5)">Level 2.2: Healthy Habits Challenge (True/False)</div>
+    <div class="menu-item" onclick="startGame(3)">Level 3: Heart-Healthy Matching (Diet & Exercise)</div>
+    <button onclick="showScreen('main-menu')">Back to Main Menu</button>
+</div>
 
         <div id="settings-menu" class="screen" style="display: none;">
             <h1>Settings</h1>
@@ -272,7 +332,6 @@ button:hover {
             <button onclick="showScreen('main-menu')">Back to Main Menu</button>
         </div>
 
-        <!-- LEVEL 1 -->
         <div id="level-1-game" class="screen" style="display: none;">
             <h2>Level 1: Vital Signs Scramble 🧩</h2>
             <p>Unscramble these six words related to the human circulatory system and leading a heart-healthy life!</p>
@@ -282,7 +341,6 @@ button:hover {
             <button id="next-level-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 1</button>
         </div>
 
-        <!-- LEVEL 2 -->
         <div id="level-2-game" class="screen" style="display: none;">
             <h2>Level 2: Heart Word Scramble (HEARTBEAT) 🔠</h2>
             <p>Swap the letter tiles to spell the word HEARTBEAT across the three rows!</p>
@@ -292,23 +350,34 @@ button:hover {
             <button onclick="checkPicturePuzzle()">Check Word</button>
             <button id="level-2-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 2</button>
         </div>
-
-        <!-- LEVEL 3 -->
+        
         <div id="level-3-game" class="screen" style="display: none;">
-            <h2>Level 2.1: Blood Pressure Quiz 🤔</h2>
-            <div id="quiz-container-3"></div>
-            <button onclick="submitQuiz(3)">Submit Answers</button>
-            <div id="level-3-feedback" class="feedback"></div>
-            <button id="level-3-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 2.1</button>
+            <h2>Level 3: Heart-Healthy Matching 🔗</h2>
+            <p>Match the term on the left with the correct definition on the right!</p>
+            <div id="matching-puzzle">
+                <div id="left-column" class="matching-column">
+                    </div>
+                <div id="right-column" class="matching-column">
+                    </div>
+            </div>
+            <div id="matching-feedback" class="feedback">Click an item on the left, then click its match on the right.</div>
+            <button id="level-3-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 3</button>
         </div>
 
-        <!-- LEVEL 4 -->
         <div id="level-4-game" class="screen" style="display: none;">
-            <h2>Level 2.2: Healthy Habits Challenge ✅/❌</h2>
+            <h2>Level 4 (2.1): Blood Pressure Quiz 🤔</h2>
             <div id="quiz-container-4"></div>
             <button onclick="submitQuiz(4)">Submit Answers</button>
             <div id="level-4-feedback" class="feedback"></div>
-            <button id="level-4-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 2.2</button>
+            <button id="level-4-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 4 (2.1)</button>
+        </div>
+
+        <div id="level-5-game" class="screen" style="display: none;">
+            <h2>Level 5 (2.2): Healthy Habits Challenge ✅/❌</h2>
+            <div id="quiz-container-5"></div>
+            <button onclick="submitQuiz(5)">Submit Answers</button>
+            <div id="level-5-feedback" class="feedback"></div>
+            <button id="level-5-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 5 (2.2)</button>
         </div>
     </div>
 
@@ -329,25 +398,28 @@ button:hover {
             'level-1-game': document.getElementById('level-1-game'),
             'level-2-game': document.getElementById('level-2-game'),
             'level-3-game': document.getElementById('level-3-game'), 
-            'level-4-game': document.getElementById('level-4-game')  
+            'level-4-game': document.getElementById('level-4-game'),
+            'level-5-game': document.getElementById('level-5-game')
         };
         const gameBody = document.getElementById('game-body');
         const puzzlesContainer = document.getElementById('puzzles-container');
 
         function showScreen(screenId) {
-            gameBody.classList.remove('level-1-bg', 'level-2-bg');
+            gameBody.classList.remove('level-1-bg', 'level-2-bg', 'level-3-bg');
             for (let id in screens) screens[id].style.display = 'none';
             screens[screenId].style.display = 'flex';
             if (screenId === 'level-1-game') gameBody.classList.add('level-1-bg');
             if (screenId === 'level-2-game') gameBody.classList.add('level-2-bg');
+            if (screenId === 'level-3-game') gameBody.classList.add('level-3-bg');
         }
 
         function startGame(level) {
             showScreen('level-' + level + '-game');
             if (level === 1) setupLevel1();
             if (level === 2) setupPicturePuzzle();
-            if (level === 3) setupQuiz(3);
-            if (level === 4) setupQuiz(4);
+            if (level === 3) setupMatchingPuzzle();
+            if (level === 4) setupQuiz(4); // NOTE: This is the old Level 3
+            if (level === 5) setupQuiz(5); // NOTE: This is the old Level 4
         }
 
         // ---------------- LEVEL 1 ----------------
@@ -458,15 +530,127 @@ button:hover {
             }
         }
 
-        // ---------------- LEVEL 3 & 4 QUIZ ----------------
+        // ---------------- NEW LEVEL 3: MATCHING ----------------
+        const matchingPairs = [
+            { left: 'SOMETIMES FOODS:', right: 'HAVE SUGARS, SALTS, AND FATS', matchId: 1 },
+            { left: 'ALWAYS FOODS:', right: 'HAVE VITAMINS AND MINERALS', matchId: 2 },
+            { left: 'EXERCISE HELPS YOU:', right: 'STRENGTHENS THE HEART', matchId: 3 }
+        ];
+
+        let leftItems = [];
+        let rightItems = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
+
+        function setupMatchingPuzzle() {
+            const leftColumn = document.getElementById('left-column');
+            const rightColumn = document.getElementById('right-column');
+            const feedback = document.getElementById('matching-feedback');
+            
+            leftColumn.innerHTML = '';
+            rightColumn.innerHTML = '';
+            feedback.textContent = 'Click an item on the left, then click its match on the right.';
+            document.getElementById('level-3-next-button').style.display = 'none';
+
+            // Reset state
+            leftItems = shuffleArray(matchingPairs.map(p => ({ text: p.left, id: p.matchId })));
+            rightItems = shuffleArray(matchingPairs.map(p => ({ text: p.right, id: p.matchId })));
+            selectedLeft = null;
+            selectedRight = null;
+            matchesFound = 0;
+
+            // Render Left Column
+            leftItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'matching-item left';
+                div.textContent = item.text;
+                div.dataset.matchId = item.id;
+                div.dataset.side = 'left';
+                div.addEventListener('click', () => handleMatchClick(div));
+                leftColumn.appendChild(div);
+            });
+
+            // Render Right Column
+            rightItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'matching-item right';
+                div.textContent = item.text;
+                div.dataset.matchId = item.id;
+                div.dataset.side = 'right';
+                div.addEventListener('click', () => handleMatchClick(div));
+                rightColumn.appendChild(div);
+            });
+        }
+
+        function handleMatchClick(element) {
+            if (element.classList.contains('matched')) return;
+
+            if (element.dataset.side === 'left') {
+                if (selectedLeft) selectedLeft.classList.remove('selected');
+                selectedLeft = element;
+                selectedLeft.classList.add('selected');
+            } else { // right side
+                if (selectedRight) selectedRight.classList.remove('selected');
+                selectedRight = element;
+                selectedRight.classList.add('selected');
+            }
+
+            checkMatch();
+        }
+
+        function checkMatch() {
+            const feedback = document.getElementById('matching-feedback');
+            
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.dataset.matchId === selectedRight.dataset.matchId) {
+                    // Match found
+                    selectedLeft.classList.remove('selected');
+                    selectedRight.classList.remove('selected');
+                    selectedLeft.classList.add('matched');
+                    selectedRight.classList.add('matched');
+                    feedback.textContent = 'Match found! Keep going!';
+                    feedback.className = 'feedback correct';
+                    matchesFound++;
+
+                    // Clear selections
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    if (matchesFound === matchingPairs.length) {
+                        feedback.textContent = 'You successfully matched all the pairs! Level 3 complete!';
+                        document.getElementById('level-3-next-button').style.display = 'block';
+                    }
+
+                } else {
+                    // Incorrect match
+                    feedback.textContent = 'Incorrect match. Try again!';
+                    feedback.className = 'feedback incorrect';
+
+                    // Clear selections after a brief pause
+                    setTimeout(() => {
+                        if (selectedLeft) selectedLeft.classList.remove('selected');
+                        if (selectedRight) selectedRight.classList.remove('selected');
+                        selectedLeft = null;
+                        selectedRight = null;
+                    }, 500);
+                }
+            } else if (selectedLeft || selectedRight) {
+                 feedback.textContent = 'Select one item from each column to make a match.';
+                 feedback.className = 'feedback';
+            }
+        }
+
+
+        // ---------------- LEVEL 4 & 5 QUIZ (PREVIOUSLY 3 & 4) ----------------
         const quizQuestions = {
-            3: [
+            4: [ // Old Level 3 / Level 2.1
                 { q: 'Normal adult blood pressure is around 120/80 mmHg.', a: 'true' },
                 { q: 'Systolic pressure is the bottom number.', a: 'false' },
                 { q: 'High blood pressure is called hypertension.', a: 'true' },
                 { q: 'Low blood pressure is always dangerous.', a: 'false' }
             ],
-            4: [
+            5: [ // Old Level 4 / Level 2.2
                 { q: 'Eating vegetables helps your heart.', a: 'true' },
                 { q: 'Skipping exercise is healthy.', a: 'false' },
                 { q: 'Getting enough sleep protects your heart.', a: 'true' },
@@ -506,8 +690,3 @@ button:hover {
     </script>
 </body>
 </html>
-
-
-
-
-
