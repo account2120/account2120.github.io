@@ -337,6 +337,12 @@ button:hover {
             <button onclick="showScreen('level-select')">Choose Levels</button>
             <button onclick="showScreen('settings-menu')">Settings</button>
         </div>
+    <div id="audio-player-container">
+        <audio id="bg-music-player" controls loop>
+            <source src="song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 
         <div id="level-select" class="screen" style="display: none;">
     <h1>Choose Your Level</h1>
