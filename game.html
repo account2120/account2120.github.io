@@ -19,10 +19,10 @@ body {
 }
 
 .level-1-bg {
-    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch1.png'); 
 }
 .level-2-bg {
-    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch2.png'); 
 }
 /* New style for level 3 matching game */
 .level-3-bg {
@@ -330,9 +330,9 @@ button:hover {
         <a id="big-home-button" class="big-home-button" href="game.html">Home</a>
 
         <div id="main-menu" class="screen">
-            <h1>Blood Pressure Puzzle Game</h1>
-            <p>A vital health education tool created for Pauley Heart Center (VCU Health)</p>
-            <p>Begin lessons!</p>
+            <h1>Heart Heroes Ambassador Training</h1>
+            <p>Gamifying a training for the Heart Heroes Ambassador Program</p>
+            <p>Welcome to your training mission!</p>
             <button onclick="showScreen('level-select')">Play Game</button>
             <button onclick="showScreen('level-select')">Choose Levels</button>
             <button onclick="showScreen('settings-menu')">Settings</button>
@@ -411,13 +411,13 @@ button:hover {
         
         <div id="level-6-game" class="screen" style="display: none;">
             <h2>Level 4: Knowledge Check & Code Entry 🔐</h2>
-            <p>Reveal the correct answer for each question to find the 4-letter code!</p>
+            <p>Select the correct answer for each question to find the 4-letter code!</p>
             <div id="quiz-container-6"></div>
             <hr style="width: 80%; border-color: #b30000; margin: 20px 0;">
             <h3>Code Entry</h3>
             <p>Enter the 4-letter code (Letters are the correct answer choices in order):</p>
             <input type="text" id="code-input" maxlength="4" placeholder="e.g., BCAA">
-            <button onclick="checkCode()">Submit Code</button>
+            <button id="check-code-button" onclick="checkCode()">Submit Code</button>
             <div id="code-feedback" class="feedback"></div>
             <button id="level-6-next-button" style="display: none;" onclick="showScreen('main-menu')">Mission Complete!</button>
         </div>
@@ -469,14 +469,18 @@ button:hover {
             if (level === 6) setupQuiz(6); // Added setup for new Level 4
         }
 
-        // ---------------- LEVEL 1 ----------------
+        // ---------------- LEVEL 1 (FIXED TYPOS) ----------------
         const level1Puzzles = [
-            { scrambled: 'stniefis', word: 'fitness', hint: 'Physical activity that strengthens your body' },
-            { scrambled: 'rhaet', word: 'heart', hint: 'This organ pumps blood' },
-            { scrambled: 'seahbpprue', word: 'pressure', hint: 'Force of blood on arteries' },
-            { scrambled: 'aehlt', word: 'health', hint: 'Overall condition of body and mind' },
-            { scrambled: 'niutrtio', word: 'nutrition', hint: 'Food and diet for a healthy body' },
-            { scrambled: 'rbledo', word: 'blood', hint: 'Carries oxygen in the body' }
+            // Corrected from 'stniefis' to 'ssteinf' -> fitness
+            { scrambled: 'ssteinf', word: 'fitness', hint: 'Physical activity that strengthens your body' }, 
+            // Corrected from 'rhaet' to 'tarhe' -> heart
+            { scrambled: 'tarhe', word: 'heart', hint: 'This organ pumps blood' }, 
+            // Corrected from 'seahbpprue' to 'dooblrepus' -> blood pressure
+            { scrambled: 'orodplressbue', word: 'bloodpressure', hint: 'Force of blood on arteries. Two words.' }, 
+            // Corrected from 'aehlt' to 'yhaethl' -> healthy
+            { scrambled: 'yhaethl', word: 'healthy', hint: 'The state of being well' }, 
+            // Corrected from 'niutrtio' to 'ritionnut' -> nutrition
+            { scrambled: 'ritionnut', word: 'nutrition', hint: 'Food and diet for a healthy body' } 
         ];
 
         function setupLevel1() {
@@ -504,10 +508,14 @@ button:hover {
         function checkAllAnswers() {
             let allCorrect = true;
             level1Puzzles.forEach((puzzle, index) => {
-                const input = document.getElementById(`puzzle-input-${index}`).value.trim().toLowerCase();
+                // Special handling for the multi-word "blood pressure" to accept "blood pressure" or "bloodpressure"
+                let input = document.getElementById(`puzzle-input-${index}`).value.trim().toLowerCase().replace(/\s/g, ''); 
+                let expectedWord = puzzle.word.replace(/\s/g, ''); 
+
                 // Clear previous correctness class
                 document.getElementById(`puzzle-input-${index}`).classList.remove('correct', 'incorrect');
-                if (input === puzzle.word) {
+
+                if (input === expectedWord) {
                     document.getElementById(`puzzle-input-${index}`).classList.add('correct');
                 } else {
                     document.getElementById(`puzzle-input-${index}`).classList.add('incorrect');
@@ -695,25 +703,69 @@ button:hover {
         }
 
 
-        // ---------------- LEVEL 4, 5, & 6 QUIZ (PREVIOUSLY 3, 4, & NEW 4) ----------------
+        // ---------------- LEVEL 4, 5, & 6 QUIZ (FIXED LEVEL 6 CONTENT) ----------------
         const quizQuestions = {
-            4: [ // Old Level 3 / Level 2.1 - True/False
+            4: [ // Level 2.1 - Blood Pressure Quiz (True/False)
                 { q: 'Normal adult blood pressure is around 120/80 mmHg.', a: 'true' },
                 { q: 'Systolic pressure is the bottom number.', a: 'false' },
                 { q: 'High blood pressure is called hypertension.', a: 'true' },
                 { q: 'Low blood pressure is always dangerous.', a: 'false' }
             ],
-            5: [ // Old Level 4 / Level 2.2 - True/False
+            5: [ // Level 2.2 - Healthy Habits Challenge (True/False)
                 { q: 'Eating vegetables helps your heart.', a: 'true' },
                 { q: 'Skipping exercise is healthy.', a: 'false' },
                 { q: 'Getting enough sleep protects your heart.', a: 'true' },
                 { q: 'Smoking is safe if you do not have high blood pressure.', a: 'false' }
             ],
-            6: [ // New Level 4 - Multiple Choice (Code is now BCAA)
-                { q: 'HOW BIG IS THE HEART?', options: ['A) FOOT SIZED', 'B) FIST SIZED', 'C) HEAD SIZED', 'D) SOFTBALL SIZED'], a: 'B', codeLetter: 'B' },
-                { q: 'AVERAGE HUMAN HEART RATE?', options: ['A) 50-60 BPM', 'B) 100-140 BPM', 'C) 60-100 BPM', 'D) 40-90 BPM'], a: 'C', codeLetter: 'C' },
-                { q: 'PREVENTATIVE MEASURES?', options: ['A) EATING HEALTHY', 'B) ANSWER 2', 'C) ANSWER 3', 'D) ANSWER 4'], a: 'A', codeLetter: 'A' },
-                { q: 'WHAT ARE THE THREE R\'s?', options: ['A) RIGHT, RELAX, RECORD', 'B) ANSWER 2', 'C) ANSWER 3', 'D) ANSWER 4'], a: 'A', codeLetter: 'A' }
+            6: [ // Level 4 - Multiple Choice (Code is BCAA)
+                { 
+                    q: 'HOW BIG IS THE HEART?', 
+                    options: [
+                        'A) FOOT SIZED', 
+                        'B) FIST SIZED', // CORRECT: B
+                        'C) HEAD SIZED', 
+                        'D) SOFTBALL SIZED'
+                    ], 
+                    a: 'B', 
+                    codeLetter: 'B',
+                    hint: 'It is roughly the size of your clenched hand.'
+                },
+                { 
+                    q: 'AVERAGE HUMAN HEART RATE (in BPM)?', 
+                    options: [
+                        'A) 50-60 BPM', 
+                        'B) 100-140 BPM', 
+                        'C) 60-100 BPM', // CORRECT: C
+                        'D) 40-90 BPM'
+                    ], 
+                    a: 'C', 
+                    codeLetter: 'C',
+                    hint: 'The range includes numbers like 72 and 85.'
+                },
+                { 
+                    q: 'PREVENTATIVE MEASURES AGAINST HIGH BP?', 
+                    options: [
+                        'A) EATING HEALTHY & EXERCISING', // CORRECT: A
+                        'B) LIMITING SLEEP', 
+                        'C) INCREASING SODIUM INTAKE', 
+                        'D) IGNORING ANNUAL CHECKUPS'
+                    ], 
+                    a: 'A', 
+                    codeLetter: 'A',
+                    hint: 'Think about physical activity and diet choices.'
+                },
+                { 
+                    q: 'WHAT ARE THE THREE R\'s FOR MEASURING BP?', 
+                    options: [
+                        'A) RIGHT, RELAX, RECORD', // CORRECT: A
+                        'B) READ, REPEAT, REST', 
+                        'C) RUN, REST, REVIEW', 
+                        'D) RELATE, REMOVE, RECHECK'
+                    ], 
+                    a: 'A', 
+                    codeLetter: 'A',
+                    hint: 'The process involves correct arm placement and writing down the reading.'
+                }
             ]
         };
         
@@ -738,16 +790,16 @@ button:hover {
                     q.options.forEach((optionText, optionIndex) => {
                         const optionValue = String.fromCharCode(65 + optionIndex); // A, B, C, D
                         innerHTML += `
-                            <label class="answer-choice" data-correct-val="${optionValue}" onclick="selectQuizAnswer(this)">
+                            <label class="answer-choice" data-correct-val="${optionValue}" onclick="selectQuizAnswer(this, ${i})">
                                 <input type="radio" name="q${i}" value="${optionValue}" style="display: none;"> ${optionText}
                             </label>`;
                     });
                     
-                    // Add Show Answer button and indicator
+                    // ADDED: Hint button and hint text to replace Show Answer
                     innerHTML += `
-                        <button class="reveal-button" onclick="showCorrectAnswer(this, ${i}, ${level})">Show Answer</button>
-                        <div class="correct-answer-indicator" id="correct-answer-indicator-${i}"></div>
-                    `;
+                        <button class="hint-button" onclick="toggleHint(this, ${i})">Hint</button>
+                        <div class="hint-text" id="hint-text-L6-Q${i}">${q.hint}</div>
+                        `;
                     // Ensure codeDigits is reset for this question
                     codeDigits[i] = null;
                 }
@@ -761,13 +813,15 @@ button:hover {
             document.getElementById(`level-${level}-next-button`) && (document.getElementById(`level-${level}-next-button`).style.display = 'none');
             
             if (level === 6) {
-                document.getElementById('code-feedback').textContent = '';
+                document.getElementById('code-feedback').textContent = 'Solve all questions, then use the correct answer letters to form the code.';
                 document.getElementById('level-6-next-button').style.display = 'none';
                 document.getElementById('code-input').value = '';
+                document.getElementById('code-input').disabled = false;
+                document.getElementById('check-code-button').disabled = false;
             }
         }
         
-        function selectQuizAnswer(label) {
+        function selectQuizAnswer(label, questionIndex) {
             const radio = label.querySelector('input[type="radio"]');
             if (radio) {
                 radio.checked = true;
@@ -777,42 +831,34 @@ button:hover {
                 });
                 // Select the clicked label
                 label.classList.add('selected-choice');
+                
+                // When an answer is selected, store the correct letter for the code
+                // This assumes the user is confident in their choice for the code.
+                const question = quizQuestions[6][questionIndex];
+                if (radio.value === question.a) {
+                    codeDigits[questionIndex] = question.codeLetter;
+                } else {
+                    // If the user selects the wrong answer, we can't be sure of the code digit yet.
+                    // For this logic, we will only set the code letter if a correct answer is selected on submit.
+                    // Instead of setting it here on *selection*, we'll use a submitQuiz approach for Level 6.
+                }
+            }
+        }
+        
+        // NEW FUNCTION for Level 6 Hint
+        function toggleHint(button, questionIndex) {
+            const hintDiv = document.getElementById(`hint-text-L6-Q${questionIndex}`);
+            // Check if the hint text is currently hidden
+            if (hintDiv.style.display === 'none' || hintDiv.style.display === '') {
+                hintDiv.style.display = 'block';
+                button.textContent = 'Hide Hint';
+            } else {
+                hintDiv.style.display = 'none';
+                button.textContent = 'Hint';
             }
         }
 
-        function showCorrectAnswer(button, questionIndex, level) {
-            const question = quizQuestions[level][questionIndex];
-            const indicator = document.getElementById(`correct-answer-indicator-${questionIndex}`);
-            const container = button.closest('.question-container');
-            
-            if (level === 6) {
-                // The code is the letter of the correct answer
-                const codeLetter = question.codeLetter;
-                
-                // MODIFICATION: Show only the correct answer letter (A, B, C, or D)
-                indicator.textContent = codeLetter; 
-                indicator.style.display = 'block';
-                
-                // Set the corresponding code letter
-                codeDigits[questionIndex] = codeLetter;
-            
-                // Visually highlight the correct option and remove selection from others
-                container.querySelectorAll('.answer-choice').forEach(label => {
-                    const input = label.querySelector('input[type="radio"]');
-                    const optionValue = input ? input.value : '';
-
-                    label.classList.remove('selected-choice'); // Clear selection
-                    
-                    if (optionValue === question.a) {
-                        label.style.backgroundColor = '#ccffcc'; // Light green highlight
-                    } else {
-                        label.style.backgroundColor = '#e6f2ff'; // Pale blue default
-                    }
-                });
-            }
-            
-            button.disabled = true; // Disable the button after showing the answer
-        }
+        // REMOVED: showCorrectAnswer function as requested.
 
 
         function submitQuiz(level) {
@@ -820,12 +866,43 @@ button:hover {
             let correctCount = 0;
             quizQuestions[level].forEach((q, i) => {
                 const selected = container.querySelector(`input[name="q${i}"]:checked`);
-                if (selected && selected.value.toLowerCase() === q.a.toLowerCase()) correctCount++;
+                if (selected && selected.value.toLowerCase() === q.a.toLowerCase()) {
+                    correctCount++;
+                    
+                    // For Level 6, this is where we would lock in the code digit based on correctness
+                    if (level === 6) {
+                         codeDigits[i] = q.codeLetter;
+                         // Highlight the correct answer
+                         container.querySelectorAll(`label[data-correct-val="${q.a}"]`).forEach(label => {
+                            label.style.backgroundColor = '#ccffcc'; // Light green highlight
+                         });
+                    }
+                } else if (level === 6) {
+                    // On incorrect, do not set the code digit
+                    codeDigits[i] = null;
+                }
             });
+            
             const feedback = document.getElementById(`level-${level}-feedback`);
             feedback.textContent = `You got ${correctCount} out of ${quizQuestions[level].length} correct.`;
             feedback.className = correctCount === quizQuestions[level].length ? 'feedback correct' : 'feedback incorrect';
-            if (correctCount === quizQuestions[level].length) document.getElementById(`level-${level}-next-button`).style.display = 'block';
+            
+            if (correctCount === quizQuestions[level].length) {
+                document.getElementById(`level-${level}-next-button`).style.display = 'block';
+            }
+            
+            if (level === 6) {
+                // For Level 6, the submit quiz is actually a check to ensure all code digits are *potentially* ready.
+                // We'll rely on the main code check now. The submit button is mainly for feedback on answers.
+                if (correctCount === quizQuestions[level].length) {
+                    // The main code logic will handle the final "complete" check
+                    document.getElementById('code-feedback').textContent = `All questions answered correctly! The code is the sequence of the correct answer letters. Enter the code below!`;
+                    document.getElementById('code-feedback').className = 'feedback correct';
+                } else {
+                    document.getElementById('code-feedback').textContent = `Some answers are still incorrect. Please select the correct choices for all questions to determine the code letters.`;
+                    document.getElementById('code-feedback').className = 'feedback incorrect';
+                }
+            }
         }
 
         // ---------------- NEW LEVEL 4 (LEVEL 6 in script) CODE LOGIC ----------------
@@ -834,20 +911,15 @@ button:hover {
     const feedback = document.getElementById('code-feedback');
     const codeInput = document.getElementById('code-input').value.trim().toUpperCase(); // Ensure uppercase for check
     
-    // The letters are stored in the order of the questions (0, 1, 2, 3).
-    // This array collects the letters that have been revealed by the user.
-    const requiredCodeLetters = [0, 1, 2, 3].map(i => codeDigits[i]).filter(d => d !== null);
-    
-    // We explicitly check that 4 code letters have been collected.
-    const expectedCodeLength = 4; 
-    const allAnswersRevealed = requiredCodeLetters.length === expectedCodeLength; 
-    
-    // RECALCULATE the correct code every time the function is run.
+    // The letters are the correct answer choices in order: B, C, A, A
+    const requiredCodeLetters = ['B', 'C', 'A', 'A']; 
     const correctCode = requiredCodeLetters.join(''); 
+    
+    // The previous logic for checking if answers were "revealed" is now irrelevant.
+    // The user simply needs to know the correct letters (BCAA) and enter them.
 
-    // Check if all answers have been revealed (i.e., all codeDigits are set)
-    if (!allAnswersRevealed) {
-        feedback.textContent = 'Please press "Show Answer" for all four questions to determine the code.';
+    if (codeInput.length !== 4) {
+        feedback.textContent = 'Please enter a 4-letter code.';
         feedback.className = 'feedback incorrect';
         return;
     }
@@ -864,7 +936,8 @@ button:hover {
         document.getElementById('level-6-next-button').style.display = 'block';
     } else {
         // Incorrect Answer: Provide encouraging feedback and allow infinite retries.
-        feedback.textContent = `Incorrect code. Review the sequence of the four revealed letters and try again! You have unlimited attempts.`;
+        // The checkCode function already allows infinite retries for incorrect code.
+        feedback.textContent = `Incorrect code. Review your answers and try again! You have unlimited attempts.`;
         feedback.className = 'feedback incorrect';
         // The input and button remain active for infinite retries.
     }
@@ -878,4 +951,3 @@ button:hover {
     </script>
 </body>
 </html>
-
