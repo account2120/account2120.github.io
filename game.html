@@ -26,11 +26,20 @@ body {
 }
 /* New style for level 3 matching game */
 .level-3-bg {
-    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch1.png'); 
 }
 /* NEW: Style for level 4 */
 .level-4-bg {
-    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch.png'); 
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch2.png'); 
+}
+
+.level-5-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch2.png'); 
+}
+
+/* NEW: Style for level 4 */
+.level-6-bg {
+    background-image: linear-gradient(rgba(240, 240, 240, 0.8), rgba(240, 240, 240, 0.8)), url('sketch2.png'); 
 }
 
 .container {
@@ -348,10 +357,10 @@ button:hover {
     <h1>Choose Your Level</h1>
     <div class="menu-item" onclick="startGame(1)">Level 1: Vital Signs Scramble (Core Concepts)</div>
     <div class="menu-item" onclick="startGame(2)">Level 2: Heart Word Scramble (HEARTBEAT)</div>
-    <div class="menu-item" onclick="startGame(4)">Level 2.1: Blood Pressure Quiz (Measurement)</div>
-    <div class="menu-item" onclick="startGame(5)">Level 2.2: Healthy Habits Challenge (True/False)</div>
-    <div class="menu-item" onclick="startGame(3)">Level 3: Heart-Healthy Matching (Diet & Exercise)</div>
-    <div class="menu-item" onclick="startGame(6)">Level 4: Knowledge Check & Code Entry</div>
+    <div class="menu-item" onclick="startGame(4)">Level 3: Blood Pressure Quiz (Measurement)</div>
+    <div class="menu-item" onclick="startGame(5)">Level 4: Healthy Habits Challenge (True/False)</div>
+    <div class="menu-item" onclick="startGame(3)">Level 5: Heart-Healthy Matching (Diet & Exercise)</div>
+    <div class="menu-item" onclick="startGame(6)">Level 6: Knowledge Check & Code Entry</div>
     <button onclick="showScreen('main-menu')">Back to Main Menu</button>
 </div>
 
@@ -381,7 +390,7 @@ button:hover {
         </div>
         
         <div id="level-3-game" class="screen" style="display: none;">
-            <h2>Level 3: Heart-Healthy Matching 🔗</h2>
+            <h2>Level 5: Heart-Healthy Matching 🔗</h2>
             <p>Match the term on the left with the correct definition on the right!</p>
             <div id="matching-puzzle">
                 <div id="left-column" class="matching-column">
@@ -390,27 +399,27 @@ button:hover {
                     </div>
             </div>
             <div id="matching-feedback" class="feedback">Click an item on the left, then click its match on the right.</div>
-            <button id="level-3-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 3</button>
+            <button id="level-3-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 5</button>
         </div>
 
         <div id="level-4-game" class="screen" style="display: none;">
-            <h2>Level 4 (2.1): Blood Pressure Quiz 🤔</h2>
+            <h2>Level 3: Blood Pressure Quiz 🤔</h2>
             <div id="quiz-container-4"></div>
             <button onclick="submitQuiz(4)">Submit Answers</button>
             <div id="level-4-feedback" class="feedback"></div>
-            <button id="level-4-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 4 (2.1)</button>
+            <button id="level-4-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 3</button>
         </div>
 
         <div id="level-5-game" class="screen" style="display: none;">
-            <h2>Level 5 (2.2): Healthy Habits Challenge ✅/❌</h2>
+            <h2>Level 4: Healthy Habits Challenge ✅/❌</h2>
             <div id="quiz-container-5"></div>
             <button onclick="submitQuiz(5)">Submit Answers</button>
             <div id="level-5-feedback" class="feedback"></div>
-            <button id="level-5-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 5 (2.2)</button>
+            <button id="level-5-next-button" style="display: none;" onclick="showScreen('level-select')">Complete Level 4</button>
         </div>
         
         <div id="level-6-game" class="screen" style="display: none;">
-            <h2>Level 4: Knowledge Check & Code Entry 🔐</h2>
+            <h2>Level 6: Knowledge Check & Code Entry 🔐</h2>
             <p>Select the correct answer for each question to find the 4-letter code!</p>
             <div id="quiz-container-6"></div>
             <hr style="width: 80%; border-color: #b30000; margin: 20px 0;">
@@ -450,13 +459,15 @@ button:hover {
         const puzzlesContainer = document.getElementById('puzzles-container');
 
         function showScreen(screenId) {
-            gameBody.classList.remove('level-1-bg', 'level-2-bg', 'level-3-bg', 'level-4-bg'); // Added level-4-bg
+            gameBody.classList.remove('level-1-bg', 'level-2-bg', 'level-3-bg', 'level-4-bg', 'level-5-bg', 'level-6-bg',); // Added level-4-bg
             for (let id in screens) screens[id].style.display = 'none';
             screens[screenId].style.display = 'flex';
             if (screenId === 'level-1-game') gameBody.classList.add('level-1-bg');
             if (screenId === 'level-2-game') gameBody.classList.add('level-2-bg');
             if (screenId === 'level-3-game') gameBody.classList.add('level-3-bg');
-            if (screenId === 'level-6-game') gameBody.classList.add('level-4-bg'); // Added background for new level 4
+            if (screenId === 'level-4-game') gameBody.classList.add('level-4-bg');
+            if (screenId === 'level-5-game') gameBody.classList.add('level-5-bg');
+            if (screenId === 'level-6-game') gameBody.classList.add('level-6-bg');
         }
 
         function startGame(level) {
@@ -679,7 +690,7 @@ button:hover {
                     selectedRight = null;
 
                     if (matchesFound === matchingPairs.length) {
-                        feedback.textContent = 'You successfully matched all the pairs! Level 3 complete!';
+                        feedback.textContent = 'You successfully matched all the pairs! Level 5 complete!';
                         document.getElementById('level-3-next-button').style.display = 'block';
                     }
 
